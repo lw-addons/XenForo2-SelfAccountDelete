@@ -1,5 +1,14 @@
 {
+    "legacy_addon_id": "",
     "title": "Self Account Deletion",
-    "version_string": "1.0.0 Alpha 1",
-    "version_id": 1000011
+    "description": "",
+    "version_id": 1000070,
+    "version_string": "1.0.0",
+    "dev": "",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": ""
 }
