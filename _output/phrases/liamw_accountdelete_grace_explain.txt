@@ -1,0 +1,1 @@
+Your account will be deleted in {days} days. You can cancel the deletion up until this point. Your content will not be removed.

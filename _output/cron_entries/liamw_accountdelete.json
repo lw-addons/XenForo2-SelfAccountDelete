@@ -1,0 +1,17 @@
+{
+    "cron_class": "\\LiamW\\AccountDelete\\Cron\\DeleteAccounts",
+    "cron_method": "deleteAccounts",
+    "run_rules": {
+        "day_type": "dom",
+        "dom": [
+            "-1"
+        ],
+        "hours": [
+            "-1"
+        ],
+        "minutes": [
+            "30"
+        ]
+    },
+    "active": true
+}

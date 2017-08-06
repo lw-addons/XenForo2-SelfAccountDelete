@@ -1,0 +1,7 @@
+<mail:subject>
+{{ phrase('liamw_accountdelete_account_deletion_scheduled', {
+	'board_title': $xf.options.boardTitle
+}) }}
+</mail:subject>
+
+{{ phrase('liamw_accountdelete_account_marked_for_deletion', {'deleteDate': date($user.AccountDelete.end_date)}) }}

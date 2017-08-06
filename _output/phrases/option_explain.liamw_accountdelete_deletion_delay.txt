@@ -1,0 +1,5 @@
+<p>Enter the number of days between a user requesting account deletion and the actual account being deleted. If a user visits the site before this number of days is up, they'll be given the option to cancel the deletion.</p>
+
+<p>Set to 0 to have deletion requests apply immediately.</p>
+
+<p>Note: Changes to this option <strong>will be applied</strong> to existing pending deletes.</p>
