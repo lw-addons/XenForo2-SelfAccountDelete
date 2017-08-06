@@ -1,0 +1,30 @@
+<xf:title>{{ phrase('liamw_accountdelete_delete_account') }}</xf:title>
+
+<xf:css src="liamw_accountdelete.less"/>
+
+<xf:wrap template="account_wrapper"/>
+
+<xf:form action="{{ link('account/delete') }}" ajax="true" class="block block--accountDeleteForm">
+    <div class="block-container">
+        <div class="block-body">
+            <div class="block--accountDeleteExplain">
+                <xf:if is="{$xf.options.liamw_accountdelete_deletion_delay}">
+                    <p>{{ phrase('liamw_accountdelete_grace_explain', {'days':
+                        $xf.options.liamw_accountdelete_deletion_delay}) }}</p>
+                    <xf:else/>
+                    <p>{{ phrase('liamw_accountdelete_immediate_explain') }}</p>
+                </xf:if>
+            </div>
+
+            <div class="block--accountDeleteConfirm">
+                <xf:checkbox label="">
+                    <xf:option name="confirmation"
+                               label="{{ phrase('liamw_accountdelete_check_box_to_confirm_deletion') }}"/>
+                </xf:checkbox>
+            </div>
+        </div>
+
+        <xf:submitrow submit="{{ phrase('liamw_accountdelete_delete_account') }}"/>
+    </div>
+</xf:form>
+
