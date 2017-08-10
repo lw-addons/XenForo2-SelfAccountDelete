@@ -1,0 +1,9 @@
+{
+    "template": "account_wrapper",
+    "description": "",
+    "execution_order": 9999,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<a href=\"{{ link('logout', null, {'t': csrf_token()}) }}\" class=\"blockLink\">{{ phrase('log_out') }}</a>",
+    "replace": "<a class=\"blockLink {{ $pageSelected == 'liamw_accountdelete_delete_account' ? 'is-selected' : '' }}\" href=\"{{ link('account/delete') }}\">\n\t{{ phrase('liamw_accountdelete_delete_account') }}\n</a>\n$0"
+}
