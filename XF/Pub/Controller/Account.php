@@ -28,7 +28,7 @@ class Account extends XFCP_Account
 		}
 		else
 		{
-			return $this->view('LiamW\AccountDelete:AccountDelete\Confirm', 'liamw_accountdelete_form');
+			return $this->addAccountWrapperParams($this->view('LiamW\AccountDelete:AccountDelete\Confirm', 'liamw_accountdelete_form'), 'liamw_accountdelete_delete_account');
 		}
 	}
 
