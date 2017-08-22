@@ -2,6 +2,9 @@
 
 namespace LiamW\AccountDelete\XF\Pub\Controller;
 
+use XF\Mvc\ParameterBag;
+use XF\Mvc\Reply\AbstractReply;
+
 class Account extends XFCP_Account
 {
 	public function actionDelete()
@@ -39,5 +42,15 @@ class Account extends XFCP_Account
 		$deleteService->cancelDeletion();
 
 		return $this->redirect($this->buildLink('index'), \XF::phrase('liamw_accountdelete_deletion_cancelled'));
+	}
+
+	protected function canUpdateSessionActivity($action, ParameterBag $params, AbstractReply &$reply, &$viewState)
+	{
+		if (\XF::visitor()->AccountDelete)
+		{
+			return false;
+		}
+
+		return parent::canUpdateSessionActivity($action, $params, $reply, $viewState);
 	}
 }
