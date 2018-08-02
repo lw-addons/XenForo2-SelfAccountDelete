@@ -14,6 +14,13 @@ class Account extends XFCP_Account
 			return $this->view('LiamW\AccountDelete:AccountDelete\Existing', 'liamw_accountdelete_pending');
 		}
 
+		if (\XF::visitor()->is_staff || \XF::visitor()->is_admin || \XF::visitor()->is_moderator)
+		{
+			return $this->error(\XF::phrase('liamw_accountdelete_as_you_are_staff_you_cannot_use_this_system'));
+		}
+
+		$this->assertAccountDeletePasswordVerified();
+
 		if ($this->isPost())
 		{
 			$confirmation = $this->filter('confirmation', 'bool');
@@ -52,5 +59,12 @@ class Account extends XFCP_Account
 		}
 
 		return parent::canUpdateSessionActivity($action, $params, $reply, $viewState);
+	}
+
+	protected function assertAccountDeletePasswordVerified()
+	{
+		$this->assertPasswordVerified(300, null, function ($view) {
+			return $this->addAccountWrapperParams($view, 'liamw_accountdelete_delete_account');
+		});
 	}
 }

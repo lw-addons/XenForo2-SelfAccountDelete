@@ -1,1 +1,1 @@
-Perform requested account deletes
+Account Delete: Perform requested account deletions

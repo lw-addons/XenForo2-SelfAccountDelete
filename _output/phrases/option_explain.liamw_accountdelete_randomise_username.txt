@@ -1,0 +1,1 @@
+If enabled, the username of a user will be changed just before deletion to a string generated from the users id.

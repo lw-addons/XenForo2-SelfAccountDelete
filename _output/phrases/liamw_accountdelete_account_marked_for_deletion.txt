@@ -1,1 +1,1 @@
-Your account has been scheduled for deletion on {deleteDate}. You may cancel this by logging into your account.
+Your account has been scheduled for deletion and will be deleted on {deleteDate}. You may cancel this by logging into your account.

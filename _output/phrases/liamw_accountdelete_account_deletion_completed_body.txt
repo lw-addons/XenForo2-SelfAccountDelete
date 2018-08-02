@@ -1,0 +1,6 @@
+{name},<br/>
+<br />
+Your account at {board_title} was successfully deleted on {date}.<br />
+<br />
+Regards,<br />
+{board_title}

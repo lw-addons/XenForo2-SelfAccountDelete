@@ -1,0 +1,11 @@
+<mail:subject>
+{{ phrase('liamw_accountdelete_account_deletion_completed', {
+	'board_title': $xf.options.boardTitle
+}) }}
+</mail:subject>
+
+{{ phrase('liamw_accountdelete_account_deletion_completed_body', {
+	'name': $user.username,
+	'board_title': $xf.options.boardTitle,
+	'date': date($xf->time)
+}) }}
