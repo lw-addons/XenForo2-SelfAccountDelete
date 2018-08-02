@@ -1,12 +1,12 @@
 {
     "edit_format": "spinbox",
-    "edit_format_params": "min=0\nstep=7",
+    "edit_format_params": "min=0",
     "data_type": "unsigned_integer",
     "sub_options": [],
     "validation_class": "",
     "validation_method": "",
     "default_value": "7",
     "relations": {
-        "users": 801
+        "users": 1100
     }
 }

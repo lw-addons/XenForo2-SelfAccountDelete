@@ -29,7 +29,8 @@ class Listener
 			'entity' => 'LiamW\AccountDelete:AccountDelete',
 			'type' => Entity::TO_ONE,
 			'conditions' => 'user_id',
-			'primary' => true
+			'primary' => true,
+			'cascadeDelete' => true
 		];
 	}
 }

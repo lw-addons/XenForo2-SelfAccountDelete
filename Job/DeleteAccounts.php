@@ -10,12 +10,11 @@ class DeleteAccounts extends AbstractJob
 	{
 		$startTime = microtime(true);
 
-		$toDelete = $this->app->finder('LiamW\AccountDelete:AccountDelete')->where('end_date', '<', \XF::$time);
+		$toDelete = \XF::repository('LiamW\AccountDelete:AccountDelete')->getAccountsToDelete();
 
-		/** @var \LiamW\AccountDelete\Entity\AccountDelete $item */
 		foreach ($toDelete AS $item)
 		{
-			$item->User->delete();
+			\XF::service('LiamW\AccountDelete:AccountDelete', $item->User)->executeDeletion();
 
 			if (microtime(true) - $startTime >= $maxRunTime)
 			{

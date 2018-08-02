@@ -4,6 +4,11 @@
         "version_string": "1.0.0 Alpha 1",
         "hash": "6dfa5f371d8791429d9d550205f1da20"
     },
+    "email/liamw_accountdelete_delete_completed.html": {
+        "version_id": 1000034,
+        "version_string": "1.0.0 Beta 4",
+        "hash": "513e6ec75c7be3907e0338c4fc03d0de"
+    },
     "email/liamw_accountdelete_delete_scheduled.html": {
         "version_id": 1000011,
         "version_string": "1.0.0 Alpha 1",

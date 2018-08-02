@@ -1,0 +1,6 @@
+{name},<br/>
+<br />
+Your account at {board_title} has been scheduled for deletion and will be deleted on {delete_date}. You may cancel this by logging into your account before this date.
+<br />
+Regards,<br />
+{board_title}

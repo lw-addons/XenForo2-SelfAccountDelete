@@ -6,11 +6,15 @@ use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
 /**
- * Class AccountDelete
+ * COLUMNS
+ * @property string user_id
+ * @property int initiate_date
  *
- * @property \XF\Entity\User $User
+ * GETTERS
+ * @property mixed end_date
  *
- * @package LiamW\AccountDelete\Entity
+ * RELATIONS
+ * @property \XF\Entity\User User
  */
 class AccountDelete extends Entity
 {
