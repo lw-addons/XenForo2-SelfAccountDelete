@@ -4,8 +4,4 @@
 }) }}
 </mail:subject>
 
-{{ phrase('liamw_accountdelete_account_deletion_scheduled_body', {
-    'name': $user.username,
-    'board_title': $xf.options.boardTitle,
-	'delete_date': date($user.AccountDelete.end_date)
-}) }}
+{{ phrase('liamw_accountdelete_account_marked_for_deletion', {'deleteDate': date($user.PendingAccountDeletion.end_date)}) }}

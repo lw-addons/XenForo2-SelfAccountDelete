@@ -1,11 +1,10 @@
 <mail:subject>
-{{ phrase('liamw_accountdelete_account_deletion_cancelled', {
+    {{ phrase('liamw_accountdelete_account_deletion_cancelled', {
     'board_title': $xf.options.boardTitle
-}) }}
+    }) }}
 </mail:subject>
 
-{{ phrase('liamw_accountdelete_account_deletion_cancelled_body',
+{{ phrase('liamw_accountdelete_account_deletion_cancelled_body', {
     'name': $user.username,
-    'board_title': $xf.options.boardTitle,
-    'date': date($xf->time)
-) }}
+    'board_title': $xf.options.boardTitle
+}) }}

@@ -1,0 +1,50 @@
+<xf:title>{{ phrase('liamw_accountdelete_account_deletion_log') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<thead>
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('user') }}</xf:cell>
+					<xf:cell>{{ phrase('liamw_accountdelete_initiated') }}</xf:cell>
+					<xf:cell>{{ phrase('reason') }}</xf:cell>
+					<xf:cell>{{ phrase('status') }}</xf:cell>
+					<xf:cell colspan="2">{{ phrase('liamw_accountdelete_completed') }}</xf:cell>
+				</xf:datarow>
+				</thead>
+				<tbody>
+				<xf:foreach loop="$accountDeletions" value="$accountDeletion">
+					<xf:macro name="deletion_log_entry" arg-deletionLogEntry="{$accountDeletion}"/>
+				</xf:foreach>
+				</tbody>
+			</xf:datalist>
+		</div>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+		link="users/change-log" data="{$user}"
+		wrapperclass="block-outer block-outer--after"/>
+</div>
+
+<xf:macro name="deletion_log_entry" arg-deletionLogEntry="!">
+	<xf:datarow rowclass="dataList-row--noHover">
+		<xf:cell>
+			<xf:avatar user="$deletionLogEntry.User" size="xxs" defaultname="{$deletionLogEntry.username}"/>
+			{{ username_link($deletionLogEntry.User, false, {'defaultname': $deletionLogEntry.username}) }}
+		</xf:cell>
+		<xf:cell>
+			<xf:date time="$deletionLogEntry.initiation_date"/>
+		</xf:cell>
+		<xf:cell>{$deletionLogEntry.reason|nl2br}</xf:cell>
+		<xf:cell>{{ $deletionLogEntry.completion_date ? phrase('liamw_accountdelete_completed') : phrase('pending') }}
+		</xf:cell>
+		<xf:cell colspan="{{ $deletionLogEntry.completion_date ? 2 : 1 }}">
+			{{ $deletionLogEntry.completion_date ? date($deletionLogEntry.completion_date) : "N/A" }}
+		</xf:cell>
+		<xf:if is="!$deletionLogEntry.completion_date">
+			<xf:action href="{{ link('logs/account-deletion/cancel', $deletionLogEntry) }}" overlay="true">
+				Cancel
+			</xf:action>
+		</xf:if>
+	</xf:datarow>
+</xf:macro>

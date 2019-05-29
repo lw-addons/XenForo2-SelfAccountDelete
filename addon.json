@@ -1,14 +1,16 @@
 {
     "legacy_addon_id": "",
     "title": "Self Account Deletion",
-    "description": "",
-    "version_id": 1000034,
-    "version_string": "1.0.0 Beta 4",
-    "dev": "",
-    "dev_url": "",
+    "description": "Allows board members to delete their own user accounts.",
+    "version_id": 1000035,
+    "version_string": "1.0.0 Beta 5",
+    "dev": "Liam Williams",
+    "dev_url": "https://lw-addons.net",
     "faq_url": "",
     "support_url": "",
-    "extra_urls": [],
+    "extra_urls": {
+        "Contribute on GitHub": "https://github.com/lw-addons/XenForo2-SelfAccountDelete"
+    },
     "require": [],
-    "icon": ""
+    "icon": "liam_logo.png"
 }

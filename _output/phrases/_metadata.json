@@ -1,4 +1,10 @@
 {
+    "admin_navigation.liamw_accountdelete_log.txt": {
+        "global_cache": false,
+        "version_id": 1000035,
+        "version_string": "1.0.0 Beta 5",
+        "hash": "c551a8d0d5b786e9aa0a9f4d0e6fe69d"
+    },
     "cron_entry.liamw_accountdelete.txt": {
         "global_cache": false,
         "version_id": 1000034,
@@ -34,6 +40,12 @@
         "version_id": 1000034,
         "version_string": "1.0.0 Beta 4",
         "hash": "e24fef9f2667076763c79965b5e46bde"
+    },
+    "liamw_accountdelete_account_deletion_log.txt": {
+        "global_cache": false,
+        "version_id": 1000035,
+        "version_string": "1.0.0 Beta 5",
+        "hash": "c551a8d0d5b786e9aa0a9f4d0e6fe69d"
     },
     "liamw_accountdelete_account_deletion_scheduled.txt": {
         "global_cache": false,
@@ -71,6 +83,12 @@
         "version_string": "1.0.0 Alpha 1",
         "hash": "892accfdf0539c6b688484cbf26438f7"
     },
+    "liamw_accountdelete_completed.txt": {
+        "global_cache": false,
+        "version_id": 1000035,
+        "version_string": "1.0.0 Beta 5",
+        "hash": "07ca5050e697392c9ed47e6453f1453f"
+    },
     "liamw_accountdelete_delete_account.txt": {
         "global_cache": false,
         "version_id": 1000034,
@@ -94,6 +112,12 @@
         "version_id": 1000033,
         "version_string": "1.0.0 Beta 3",
         "hash": "44063949e2ccdc9bdd4bdf93e56a2fbe"
+    },
+    "liamw_accountdelete_initiated.txt": {
+        "global_cache": false,
+        "version_id": 1000035,
+        "version_string": "1.0.0 Beta 5",
+        "hash": "b41cf53000b30fa98c5413267e8fd75b"
     },
     "liamw_accountdelete_method_delete.txt": {
         "global_cache": false,

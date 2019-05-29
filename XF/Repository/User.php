@@ -8,7 +8,7 @@ class User extends XFCP_User
 	{
 		$with = parent::getVisitorWith($with);
 
-		$with[] = 'AccountDelete';
+		$with[] = 'PendingAccountDeletion';
 
 		return $with;
 	}

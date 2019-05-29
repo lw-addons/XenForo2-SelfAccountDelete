@@ -2,6 +2,8 @@
 
 namespace LiamW\AccountDelete\XF\Pub\Controller;
 
+use LiamW\AccountDelete\Service\AccountDelete;
+use XF;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
 
@@ -9,14 +11,14 @@ class Account extends XFCP_Account
 {
 	public function actionDelete()
 	{
-		if (\XF::visitor()->AccountDelete)
+		if (XF::visitor()->PendingAccountDeletion)
 		{
-			return $this->view('LiamW\AccountDelete:AccountDelete\Existing', 'liamw_accountdelete_pending');
+			return $this->view('LiamW\AccountDelete:AccountDelete\Pending', 'liamw_accountdelete_pending');
 		}
 
-		if (\XF::visitor()->is_staff || \XF::visitor()->is_admin || \XF::visitor()->is_moderator)
+		if (XF::visitor()->is_staff || XF::visitor()->is_admin || XF::visitor()->is_moderator)
 		{
-			return $this->error(\XF::phrase('liamw_accountdelete_as_you_are_staff_you_cannot_use_this_system'));
+			return $this->error(XF::phrase('liamw_accountdelete_as_you_are_staff_you_cannot_use_this_system'));
 		}
 
 		$this->assertAccountDeletePasswordVerified();
@@ -27,14 +29,14 @@ class Account extends XFCP_Account
 
 			if (!$confirmation)
 			{
-				return $this->error(\XF::phrase('liamw_accountdelete_please_confirm_deletion_by_checking_the_checkbox'));
+				return $this->error(XF::phrase('liamw_accountdelete_please_confirm_deletion_by_checking_the_checkbox'));
 			}
 
-			/** @var \LiamW\AccountDelete\Service\AccountDelete $deleteService */
-			$deleteService = $this->service('LiamW\AccountDelete:AccountDelete', \XF::visitor(), $this);
+			/** @var AccountDelete $deleteService */
+			$deleteService = $this->service('LiamW\AccountDelete:AccountDelete', XF::visitor(), $this);
 			$deleteService->scheduleDeletion();
 
-			return $this->redirect($this->buildLink('index'), \XF::phrase('liamw_accountdelete_account_deletion_scheduled'));
+			return $this->redirect($this->buildLink('index'), XF::phrase('liamw_accountdelete_account_deletion_scheduled'));
 		}
 		else
 		{
@@ -44,16 +46,16 @@ class Account extends XFCP_Account
 
 	public function actionDeleteCancel()
 	{
-		/** @var \LiamW\AccountDelete\Service\AccountDelete $deleteService */
-		$deleteService = $this->service('LiamW\AccountDelete:AccountDelete', \XF::visitor(), $this);
+		/** @var AccountDelete $deleteService */
+		$deleteService = $this->service('LiamW\AccountDelete:AccountDelete', XF::visitor(), $this);
 		$deleteService->cancelDeletion();
 
-		return $this->redirect($this->buildLink('index'), \XF::phrase('liamw_accountdelete_deletion_cancelled'));
+		return $this->redirect($this->buildLink('index'), XF::phrase('liamw_accountdelete_deletion_cancelled'));
 	}
 
 	protected function canUpdateSessionActivity($action, ParameterBag $params, AbstractReply &$reply, &$viewState)
 	{
-		if (\XF::visitor()->AccountDelete)
+		if (XF::visitor()->PendingAccountDeletion)
 		{
 			return false;
 		}

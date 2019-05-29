@@ -5,7 +5,7 @@
 <div class="block block--accountDeletePending">
     <div class="block-container">
         <div class="block-body">
-            <p>{{ phrase('liamw_accountdelete_delete_pending', {'deleteDate': date($xf.visitor.AccountDelete.end_date)}) }}</p>
+            <p>{{ phrase('liamw_accountdelete_delete_pending', {'deleteDate': date($xf.visitor.PendingAccountDeletion.end_date)}) }}</p>
 
             <a href="{{ link('account/delete/cancel') }}" class="button primary">{{ phrase('liamw_accountdelete_cancel_deletion') }}</a>
         </div>
