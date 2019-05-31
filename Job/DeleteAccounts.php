@@ -33,7 +33,7 @@ class DeleteAccounts extends AbstractJob
 
 	public function getStatusMessage()
 	{
-		return XF::phrase('liamw_accountdelete_deleting_accounts...');
+		return \XF::phrase('liamw_accountdelete_deleting_accounts...');
 	}
 
 	public function canCancel()

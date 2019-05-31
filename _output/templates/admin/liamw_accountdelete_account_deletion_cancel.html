@@ -1,0 +1,13 @@
+<xf:title>{{ phrase('liamw_accountdelete_cancel_account_deletion') }}</xf:title>
+
+<xf:form action="{{ link('logs/account-deletion/cancel', $accountDeletion) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('liamw_accountdelete_please_confirm_that_you_wish_to_cancel_following_account_deletion') }}
+				<strong><a href="{{ link('users/edit', $accountDeletion.User) }}">{$accountDeletion.User.username}</a></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="cancel" />
+	</div>
+</xf:form>

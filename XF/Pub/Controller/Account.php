@@ -50,7 +50,7 @@ class Account extends XFCP_Account
 		$deleteService = $this->service('LiamW\AccountDelete:AccountDelete', XF::visitor(), $this);
 		$deleteService->cancelDeletion();
 
-		return $this->redirect($this->buildLink('index'), XF::phrase('liamw_accountdelete_deletion_cancelled'));
+		return $this->redirect($this->buildLink('index'), \XF::phrase('liamw_accountdelete_account_deletion_cancelled'));
 	}
 
 	protected function canUpdateSessionActivity($action, ParameterBag $params, AbstractReply &$reply, &$viewState)
@@ -65,7 +65,8 @@ class Account extends XFCP_Account
 
 	protected function assertAccountDeletePasswordVerified()
 	{
-		$this->assertPasswordVerified(300, null, function ($view) {
+		$this->assertPasswordVerified(300, null, function($view)
+		{
 			return $this->addAccountWrapperParams($view, 'liamw_accountdelete_delete_account');
 		});
 	}

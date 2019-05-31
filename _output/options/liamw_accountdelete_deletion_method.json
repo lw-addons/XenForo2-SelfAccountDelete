@@ -1,11 +1,15 @@
 {
-    "edit_format": "radio",
-    "edit_format_params": "disable={{ phrase('liamw_accountdelete_method_disable') }}\ndelete={{ phrase('liamw_accountdelete_method_delete') }}",
-    "data_type": "string",
-    "sub_options": [],
+    "edit_format": "template",
+    "edit_format_params": "liamw_accountdelete_option_template_deletion_method",
+    "data_type": "array",
+    "sub_options": [
+        "mode",
+        "delete_options",
+        "disable_options"
+    ],
     "validation_class": "",
     "validation_method": "",
-    "default_value": "disable",
+    "default_value": "{\"mode\":\"disable\",\"delete_options\":{\"ban_email\":false},\"disable_options\":{\"remove_email\":false,\"ban_email\":false,\"remove_password\":false}}",
     "relations": {
         "users": 1101
     }

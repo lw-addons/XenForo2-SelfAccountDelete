@@ -17,14 +17,36 @@ class Listener
 		if (XF::visitor()->PendingAccountDeletion && !($controller instanceof Account && ($action == 'Delete' || $action == 'DeleteCancel')) && !$controller->isPost() && !$controller->request()
 				->isXhr())
 		{
-			$reply = $controller->rerouteController('XF\Pub\Controller\Account', 'Delete');
-
 			if ($controller->request()->getRoutePath() != '')
 			{
 				$reply = $controller->redirect($controller->buildLink('index'));
 			}
+			else
+			{
+				$reply = $controller->rerouteController('XF\Pub\Controller\Account', 'Delete');
+			}
 
 			throw $controller->exception($reply);
+		}
+	}
+
+	public static function userEntityPostDelete(\XF\Mvc\Entity\Entity $entity)
+	{
+		if ($entity->getOption('admin_edit') === true && $entity->PendingAccountDeletion)
+		{
+			$entity->PendingAccountDeletion->status = 'complete_manual';
+			$entity->PendingAccountDeletion->completion_date = XF::$time;
+			$entity->PendingAccountDeletion->save();
+		}
+	}
+
+	public static function userEntityPostSave(\XF\Mvc\Entity\Entity $entity)
+	{
+		if ($entity->getOption('admin_edit') === true && $entity->PendingAccountDeletion && $entity->isStateChanged('user_state', 'disabled') == 'enter')
+		{
+			$entity->PendingAccountDeletion->status = 'complete_manual';
+			$entity->PendingAccountDeletion->completion_date = XF::$time;
+			$entity->PendingAccountDeletion->save();
 		}
 	}
 
@@ -33,15 +55,13 @@ class Listener
 		$structure->relations['AccountDeletionLogs'] = [
 			'entity' => 'LiamW\AccountDelete:AccountDelete',
 			'type' => Entity::TO_MANY,
-			'conditions' => 'user_id',
-			'primary' => true
+			'conditions' => 'user_id'
 		];
 
 		$structure->relations['PendingAccountDeletion'] = [
 			'entity' => 'LiamW\AccountDelete:AccountDelete',
 			'type' => Entity::TO_ONE,
-			'conditions' => ['user_id', ['status', '=', 'pending']],
-			'primary' => true
+			'conditions' => ['user_id', ['status', '=', 'pending']]
 		];
 	}
 }

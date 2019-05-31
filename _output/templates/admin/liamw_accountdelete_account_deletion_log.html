@@ -1,6 +1,12 @@
 <xf:title>{{ phrase('liamw_accountdelete_account_deletion_log') }}</xf:title>
 
 <div class="block">
+	<div class="block-outer">
+		<xf:macro template="filter_macros" name="quick_filter"
+			arg-key="deletion_log"
+			arg-ajax="{{ link('logs/account-deletion') }}"
+			arg-class="block-outer-opposite" />
+	</div>
 	<div class="block-container">
 		<div class="block-body">
 			<xf:datalist data-xf-init="responsive-data-list">
@@ -20,6 +26,9 @@
 				</tbody>
 			</xf:datalist>
 		</div>
+		<div class="block-footer">
+			<span class="block-footer-counter">{{ display_totals($accountDeletions, $total) }}</span>
+		</div>
 	</div>
 	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
 		link="logs/account-deletion" data="{$user}"
@@ -36,12 +45,21 @@
 			<xf:date time="$deletionLogEntry.initiation_date"/>
 		</xf:cell>
 		<xf:cell>{$deletionLogEntry.reason|nl2br}</xf:cell>
-		<xf:cell>{{ $deletionLogEntry.completion_date ? phrase('liamw_accountdelete_completed') : phrase('pending') }}
+		<xf:cell>
+			<xf:if is="$deletionLogEntry.status == 'pending'">
+				{{ phrase('pending') }}
+			<xf:elseif is="$deletionLogEntry.status == 'complete'" />
+				{{ phrase('liamw_accountdelete_completed') }}
+			<xf:elseif is="$deletionLogEntry.status == 'complete_manual'" />
+				{{ phrase('liamw_accountdelete_manually_completed') }}
+			<xf:elseif is="$deletionLogEntry.status == 'cancelled'" />
+				{{ phrase('liamw_accountdelete_cancelled') }}
+			</xf:if>
 		</xf:cell>
-		<xf:cell colspan="{{ $deletionLogEntry.completion_date ? 2 : 1 }}">
+		<xf:cell colspan="{{ $deletionLogEntry.status == 'pending' ? 1 : 2 }}">
 			{{ $deletionLogEntry.completion_date ? date($deletionLogEntry.completion_date) : "N/A" }}
 		</xf:cell>
-		<xf:if is="!$deletionLogEntry.completion_date">
+		<xf:if is="$deletionLogEntry.status == 'pending'">
 			<xf:action href="{{ link('logs/account-deletion/cancel', $deletionLogEntry) }}" overlay="true">
 				{{ phrase('cancel') }}
 			</xf:action>

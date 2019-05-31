@@ -1,1 +1,1 @@
-Self Account Deletion Method
+Self delete method

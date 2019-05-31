@@ -1,0 +1,47 @@
+<xf:radiorow label="{$option.title}"
+	name="{$inputName}[mode]"
+	value="{$option.option_value.mode}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<xf:option value="disable">
+		<xf:label>{{ phrase('disable') }}</xf:label>
+		<xf:hint>{{ phrase('liamw_accountdelete_mark_user_account_as_disabled_preventing_use_of_account') }}</xf:hint>
+		<xf:dependent hide="true">
+			<xf:checkbox>
+				<xf:option name="{$inputName}[disable_options][remove_email]"
+					selected="{$option.option_value.disable_options.remove_email}"
+					hint="{{ phrase('liamw_accountdelete_remove_users_email_address_from_database') }}">
+					<xf:label>{{ phrase('liamw_accountdelete_remove_email') }}</xf:label>
+					<xf:dependent>
+						<xf:checkbox>
+							<xf:option name="{$inputName}[disable_options][ban_email]"
+								selected="{$option.option_value.disable_options.ban_email}"
+								hint="{{ phrase('liamw_accountdelete_add_users_email_address_to_banned_list_to_prevent_re_registration') }}">
+								{{ phrase('liamw_accountdelete_ban_email') }}
+							</xf:option>
+						</xf:checkbox>
+					</xf:dependent>
+				</xf:option>
+				<xf:option name="{$inputName}[disable_options][remove_password]"
+					selected="{$option.option_value.disable_options.remove_password}"
+					hint="{{ phrase('liamw_accountdelete_remove_users_password_and_third_party_account_connections') }}">
+					{{ phrase('liamw_accountdelete_remove_password') }}
+				</xf:option>
+			</xf:checkbox>
+		</xf:dependent>
+	</xf:option>
+	<xf:option value="delete" hint="{{ phrase('liamw_accountdelete_completely_remove_user_from_database') }}">
+		<xf:label>{{ phrase('delete') }}</xf:label>
+		<xf:dependent>
+			<xf:checkbox>
+				<xf:option name="{$inputName}[delete_options][ban_email]"
+					selected="{$option.option_value.delete_options.ban_email}"
+					hint="{{ phrase('liamw_accountdelete_add_users_email_address_to_banned_list_to_prevent_re_registration') }}">
+					{{ phrase('liamw_accountdelete_ban_email') }}
+				</xf:option>
+			</xf:checkbox>
+		</xf:dependent>
+	</xf:option>
+</xf:radiorow>

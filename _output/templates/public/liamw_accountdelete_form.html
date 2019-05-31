@@ -17,13 +17,13 @@
 			</div>
 
 			<div class="block--accountDeleteConfirm">
-				<xf:checkbox label="">
+				<xf:checkbox standalone="true">
 					<xf:option name="confirmation"
 						label="{{ phrase('liamw_accountdelete_check_box_to_confirm_deletion') }}"/>
 				</xf:checkbox>
 			</div>
 		</div>
 
-		<xf:submitrow submit="{{ phrase('liamw_accountdelete_delete_account') }}"/>
+		<xf:submitrow submit="{{ phrase('liamw_accountdelete_delete_account') }}" rowtype="simple"/>
 	</div>
 </xf:form>

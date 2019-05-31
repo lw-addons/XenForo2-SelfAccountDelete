@@ -1,1 +1,0 @@
-You can choose to have deleted accounts completely removed from the database, or have them marked as disabled. Disabled accounts can be logged into, but cannot be used and the disabled state cannot be removed without administrator intervention.

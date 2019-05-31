@@ -1,0 +1,1 @@
+Mark the user account as disabled, preventing use of the account.

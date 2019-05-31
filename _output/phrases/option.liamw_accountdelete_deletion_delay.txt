@@ -1,1 +1,1 @@
-Self Deletion Delay (Days)
+Self delete delay

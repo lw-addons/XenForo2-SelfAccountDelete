@@ -13,14 +13,16 @@ use XF\Mvc\Entity\Structure;
  * @property int deletion_id
  * @property int user_id
  * @property string username
+ * @property string|null reason
  * @property int initiation_date
- * @property int|null completed_date
+ * @property int|null completion_date
+ * @property string status
  *
  * GETTERS
  * @property mixed end_date
  *
  * RELATIONS
- * @property User User
+ * @property \XF\Entity\User User
  */
 class AccountDelete extends Entity
 {
@@ -37,6 +39,11 @@ class AccountDelete extends Entity
 		return $this->initiation_date + (XF::options()->liamw_accountdelete_deletion_delay * 86400); // 86400 seconds in a day
 	}
 
+	protected final function _preDelete()
+	{
+		throw new \BadMethodCallException("account deletion records cannot be deleted");
+	}
+
 	public static function getStructure(Structure $structure)
 	{
 		$structure->table = 'xf_liamw_accountdelete_account_deletions';
@@ -49,7 +56,7 @@ class AccountDelete extends Entity
 			'reason' => ['type' => self::STR, 'nullable' => true],
 			'initiation_date' => ['type' => self::UINT, 'default' => XF::$time],
 			'completion_date' => ['type' => self::UINT, 'nullable' => true],
-			'status' => ['type' => self::STR, 'allowedValues' => ['pending', 'complete', 'cancelled']],
+			'status' => ['type' => self::STR, 'allowedValues' => ['pending', 'complete', 'complete_manual', 'cancelled']],
 		];
 		$structure->getters = [
 			'end_date' => true
@@ -58,7 +65,8 @@ class AccountDelete extends Entity
 			'User' => [
 				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
-				'conditions' => 'user_id'
+				'conditions' => 'user_id',
+				'primary' => true
 			]
 		];
 

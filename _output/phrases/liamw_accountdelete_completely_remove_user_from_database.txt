@@ -1,0 +1,1 @@
+Completely remove the user from the database.

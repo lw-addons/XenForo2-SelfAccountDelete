@@ -10,17 +10,16 @@ use XF\Mvc\Entity\Repository;
 class AccountDelete extends Repository
 {
 	/**
-	 * @return \LiamW\AccountDelete\Entity\AccountDelete[]|ArrayCollection
+	 * @return XF\Mvc\Entity\Finder
 	 */
-	public function getAccountsToDelete()
+	public function findAccountsToDelete()
 	{
 		return XF::app()->finder('LiamW\AccountDelete:AccountDelete')->where('status', 'pending')
-				  ->where('initiation_date', '<=', XF::$time - (XF::options()->liamw_accountdelete_deletion_delay * 86400))
-				  ->fetch();
+				  ->where('initiation_date', '<=', XF::$time - (XF::options()->liamw_accountdelete_deletion_delay * 86400));
 	}
 
-	public function getRandomisedUsername(User $user)
+	public function getDeletedUserUsername(User $user)
 	{
-		return 'deleted' . $user->user_id;
+		return XF::phrase('deleted_member') . " {$user->user_id}";
 	}
 }

@@ -40,7 +40,7 @@ class Setup extends AbstractSetup
 			$table->addColumn('reason', 'text')->nullable()->setDefault(null);
 			$table->renameColumn('initiate_date', 'initiation_date');
 			$table->addColumn('completion_date', 'int')->nullable()->setDefault(null);
-			$table->addColumn('status', 'enum', ['pending', 'complete', 'cancelled'])->setDefault('pending');
+			$table->addColumn('status', 'enum', ['pending', 'complete', 'complete_manual', 'cancelled'])->setDefault('pending');
 			$table->addKey('user_id');
 			$table->addKey('username');
 		});

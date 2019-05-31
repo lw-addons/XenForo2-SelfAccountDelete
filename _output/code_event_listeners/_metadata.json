@@ -2,6 +2,12 @@
     "controller_pre_dispatch_f74fc276ab5b4169d8190f07734169c9.json": {
         "hash": "1cf6431917e731a492726359c9ec4470"
     },
+    "entity_post_delete_955adf4d5f1cd96aff55d71e368ad767.json": {
+        "hash": "2d2f1d1bf5ec44c18a3496eb99bc39d3"
+    },
+    "entity_post_save_afffb8d335844c3f9898c0abb0150719.json": {
+        "hash": "af75d04576a50d295b0cb0f5f17103ef"
+    },
     "entity_structure_3d1c0d1714e2c4ae12dc24b99ef6e43e.json": {
         "hash": "a52ce7b25330c4908151f8f3f0592b2b"
     }

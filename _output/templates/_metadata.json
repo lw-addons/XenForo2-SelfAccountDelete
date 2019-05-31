@@ -1,8 +1,18 @@
 {
+    "admin/liamw_accountdelete_account_deletion_cancel.html": {
+        "version_id": 1000035,
+        "version_string": "1.0.0 Beta 5",
+        "hash": "5e1e865cc91b9e113830d48960d70aa5"
+    },
     "admin/liamw_accountdelete_account_deletion_log.html": {
         "version_id": 1000035,
         "version_string": "1.0.0 Beta 5",
-        "hash": "9890b8fcf245ff18b4f5eda259c9ba03"
+        "hash": "24710bbe3f1b1eb1b1095613cd28e127"
+    },
+    "admin/liamw_accountdelete_option_template_deletion_method.html": {
+        "version_id": 1000035,
+        "version_string": "1.0.0 Beta 5",
+        "hash": "97e215d31013b928a16f030157120e9e"
     },
     "email/liamw_accountdelete_delete_cancelled.html": {
         "version_id": 1000035,
@@ -27,7 +37,7 @@
     "public/liamw_accountdelete_form.html": {
         "version_id": 1000035,
         "version_string": "1.0.0 Beta 5",
-        "hash": "349f0a27a1a82b4530aec2e272d4fcfc"
+        "hash": "abe3b1ac25a3009546d80d189c91b862"
     },
     "public/liamw_accountdelete_pending.html": {
         "version_id": 1000035,
