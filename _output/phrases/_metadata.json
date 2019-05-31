@@ -53,12 +53,6 @@
         "version_string": "1.0.0 Alpha 1",
         "hash": "328b6ba412dd8b90bf40277e20b9c061"
     },
-    "liamw_accountdelete_account_deletion_scheduled_body.txt": {
-        "global_cache": false,
-        "version_id": 1000034,
-        "version_string": "1.0.0 Beta 4",
-        "hash": "f7ea772f6502fa55b470b4ba10583343"
-    },
     "liamw_accountdelete_account_marked_for_deletion.txt": {
         "global_cache": false,
         "version_id": 1000034,
