@@ -49,7 +49,14 @@ class AccountDelete extends AbstractService
 		}
 		else
 		{
-			$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $this->repository('LiamW\AccountDelete:AccountDelete')->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+			$repository = $this->repository('LiamW\AccountDelete:AccountDelete');
+
+			if ($repository->getNextRemindTime())
+			{
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+			}
+
+			$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
 
 			if ($sendEmail)
 			{
