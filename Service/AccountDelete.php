@@ -55,6 +55,10 @@ class AccountDelete extends AbstractService
 			{
 				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
 			}
+			else
+			{
+				$this->app->jobManager()->cancelUniqueJob('lwAccountDeleteReminder');
+			}
 
 			$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
 
@@ -71,6 +75,26 @@ class AccountDelete extends AbstractService
 		{
 			$this->user->PendingAccountDeletion->status = "cancelled";
 			$this->user->PendingAccountDeletion->save();
+
+			$repository = $this->repository('LiamW\AccountDelete:AccountDelete');
+
+			if ($repository->getNextRemindTime())
+			{
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+			}
+			else
+			{
+				$this->app->jobManager()->cancelUniqueJob('lwAccountDeleteReminder');
+			}
+
+			if ($repository->getNextDeletionTime())
+			{
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+			}
+			else
+			{
+				$this->app->jobManager()->cancelUniqueJob('lwAccountDeleteRunner');
+			}
 
 			if ($sendEmail)
 			{
