@@ -57,6 +57,7 @@ class AccountDelete extends Entity
 			'initiation_date' => ['type' => self::UINT, 'default' => XF::$time],
 			'completion_date' => ['type' => self::UINT, 'nullable' => true],
 			'status' => ['type' => self::STR, 'allowedValues' => ['pending', 'complete', 'complete_manual', 'cancelled']],
+			'reminder_sent' => ['type' => self::BOOL, 'default' => 0]
 		];
 		$structure->getters = [
 			'end_date' => true

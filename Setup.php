@@ -24,12 +24,13 @@ class Setup extends AbstractSetup
 			$table->addColumn('initiation_date', 'int');
 			$table->addColumn('completion_date', 'int')->nullable()->setDefault(null);
 			$table->addColumn('status', 'enum', ['pending', 'complete', 'cancelled'])->setDefault('pending');
+			$table->addColumn('reminder_sent', 'bool')->setDefault(0);
 			$table->addKey('user_id');
 			$table->addKey('username');
 		});
 	}
 
-	public function upgrade2000035Step1()
+	public function upgrade1010010Step1()
 	{
 		$this->schemaManager()->alterTable('xf_liamw_accountdelete_pending', function(Alter $table)
 		{
@@ -41,6 +42,7 @@ class Setup extends AbstractSetup
 			$table->renameColumn('initiate_date', 'initiation_date');
 			$table->addColumn('completion_date', 'int')->nullable()->setDefault(null);
 			$table->addColumn('status', 'enum', ['pending', 'complete', 'complete_manual', 'cancelled'])->setDefault('pending');
+			$table->addColumn('reminder_sent', 'bool')->setDefault(0);
 			$table->addKey('user_id');
 			$table->addKey('username');
 		});
