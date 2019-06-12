@@ -1,6 +1,6 @@
 {
     "legacy_addon_id": "",
-    "title": "Self Account Deletion",
+    "title": "Member Self Delete",
     "description": "Gives board members the ability to delete or disable their accounts.",
     "version_id": 1010010,
     "version_string": "1.1.0 Alpha",
