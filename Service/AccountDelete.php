@@ -97,7 +97,7 @@ class AccountDelete extends AbstractService
 						}
 					}
 
-					// Set trusted bypasses verifications
+					// Entity::setTrusted skips verification
 					$this->user->setTrusted('email', '');
 				}
 
