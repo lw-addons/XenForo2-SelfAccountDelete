@@ -12,7 +12,7 @@ class SendDeleteReminders extends AbstractJob
 		$startTime = microtime(true);
 
 		$repository = XF::repository('LiamW\AccountDelete:AccountDelete');
-		$toRemind = $repository->findAccountsToRemind();
+		$toRemind = $repository->findAccountsToRemind()->fetch();
 
 		if (!$toRemind->count())
 		{

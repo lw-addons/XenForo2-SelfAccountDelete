@@ -32,20 +32,23 @@ class Listener
 
 	public static function optionEntityPostSave(\XF\Mvc\Entity\Entity $entity)
 	{
-		XF::runLater(function() use ($entity)
+		$valueChanged = $entity->isChanged('option_value');
+
+		XF::runLater(function() use ($valueChanged, $entity)
 		{
 			/** @var XF\Entity\Option $entity */
-			if ($entity->isChanged('option_value'))
+			if ($valueChanged)
 			{
 				if ($entity->option_id == 'liamw_accountdelete_deletion_delay')
 				{
-					XF::app()->jobManager()->enqueueLater('lwAccountDeleteRunner', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+					XF::app()->jobManager()->enqueueLater('lwAccountDeleteRunner', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextDeletionTime($entity->option_value), 'LiamW\AccountDelete:DeleteAccounts');
+					XF::app()->jobManager()->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextRemindTime($entity->option_value), 'LiamW\AccountDelete:SendDeleteReminders');
 				}
 				elseif ($entity->option_id == 'liamw_accountdelete_reminder_threshold')
 				{
 					if ($entity->option_value)
 					{
-						XF::app()->jobManager()->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+						XF::app()->jobManager()->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextRemindTime(null, $entity->option_value), 'LiamW\AccountDelete:SendDeleteReminders');
 					}
 					else
 					{

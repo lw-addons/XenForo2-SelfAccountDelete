@@ -214,10 +214,14 @@ class AccountDelete extends AbstractService
 
 	public function sendReminderEmail()
 	{
-		if (!$this->user->email || $this->user->user_state != 'valid')
+		if (!$this->user->email || $this->user->user_state != 'valid' || $this->user->PendingAccountDeletion->reminder_sent)
 		{
 			return;
 		}
+
+		$pendingDeletion = $this->user->PendingAccountDeletion;
+		$pendingDeletion->reminder_sent = 1;
+		$pendingDeletion->save();
 
 		$mail = XF::mailer()->newMail();
 		$mail->setToUser($this->user);

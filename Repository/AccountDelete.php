@@ -33,23 +33,27 @@ class AccountDelete extends Repository
 			->where('initiation_date', '<=', XF::$time - (XF::options()->liamw_accountdelete_deletion_delay * 86400));
 	}
 
-	public function getNextRemindTime()
+	public function getNextRemindTime($deletionDelay = null, $reminderThreshold = null)
 	{
-		if (!XF::options()->liamw_accountdelete_reminder_threshold)
+		$deletionDelay = $deletionDelay ?: XF::options()->liamw_accountdelete_deletion_delay;
+		$reminderThreshold = $reminderThreshold ?: XF::options()->liamw_accountdelete_reminder_threshold;
+
+		if (!$reminderThreshold)
 		{
 			return null;
 		}
 
-		$nextInitiationDate = $this->db()->fetchOne("SELECT MIN(initiation_date) FROM xf_liamw_accountdelete_account_deletions WHERE status='pending'");
-
-		return $nextInitiationDate ? ($nextInitiationDate + (XF::options()->liamw_accountdelete_deletion_delay * 86400)) - (XF::options()->liamw_accountdelete_reminder_threshold * 86400) : null;
+		$nextInitiationDate = $this->db()->fetchOne("SELECT MIN(initiation_date) FROM xf_liamw_accountdelete_account_deletions WHERE status='pending' AND reminder_sent=0");
+		return $nextInitiationDate ? ($nextInitiationDate + ($deletionDelay * 86400)) - ($reminderThreshold * 86400) : null;
 	}
 
-	public function getNextDeletionTime()
+	public function getNextDeletionTime($deletionDelay = null)
 	{
+		$deletionDelay = $deletionDelay ?: XF::options()->liamw_accountdelete_deletion_delay;
+
 		$nextInitiationDate = $this->db()->fetchOne("SELECT MIN(initiation_date) FROM xf_liamw_accountdelete_account_deletions WHERE status='pending'");
 
-		return $nextInitiationDate ? $nextInitiationDate + (XF::options()->liamw_accountdelete_deletion_delay * 86400) : null;
+		return $nextInitiationDate ? $nextInitiationDate + ($deletionDelay * 86400) : null;
 	}
 
 	public function getDeletedUserUsername(User $user)
