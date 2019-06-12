@@ -5,12 +5,6 @@
         "version_string": "1.0.0 Beta 5",
         "hash": "c551a8d0d5b786e9aa0a9f4d0e6fe69d"
     },
-    "cron_entry.liamw_accountdelete.txt": {
-        "global_cache": false,
-        "version_id": 1000034,
-        "version_string": "1.0.0 Beta 4",
-        "hash": "8190507884a232417bc59ed65885cf26"
-    },
     "liamw_accountdelete_account_delete_pending.txt": {
         "global_cache": false,
         "version_id": 1000011,
@@ -125,6 +119,12 @@
         "version_string": "1.0.0 Beta 4",
         "hash": "e6e049c44a797fda2a175d07df838e49"
     },
+    "liamw_accountdelete_delete_imminent_body_html.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "15d6c826222be71527cce0b7c6261a77"
+    },
     "liamw_accountdelete_delete_pending.txt": {
         "global_cache": false,
         "version_id": 1000034,
@@ -203,6 +203,12 @@
         "version_string": "1.0.0 Beta 5",
         "hash": "150d4816f993d322e1b070b569cea64a"
     },
+    "liamw_accountdelete_your_x_account_will_be_deleted_in_y_days.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "27181e263d8830b67911ed716bb6e840"
+    },
     "option.liamw_accountdelete_deletion_delay.txt": {
         "global_cache": false,
         "version_id": 1000035,
@@ -221,6 +227,12 @@
         "version_string": "1.0.0 Beta 3",
         "hash": "28b9368c8be952fd0067b17de52d0d5f"
     },
+    "option.liamw_accountdelete_reminder_threshold.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "0eea4a4aa6ba6334e710a586c48fa0e2"
+    },
     "option_explain.liamw_accountdelete_deletion_delay.txt": {
         "global_cache": false,
         "version_id": 1000011,
@@ -238,5 +250,11 @@
         "version_id": 1000033,
         "version_string": "1.0.0 Beta 3",
         "hash": "11976e999907ff10992c4e703562bf72"
+    },
+    "option_explain.liamw_accountdelete_reminder_threshold.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "aea2ed409170c4706c95e317591816ea"
     }
 }

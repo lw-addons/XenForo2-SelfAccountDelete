@@ -1,0 +1,5 @@
+{name},
+
+Your account at {boardTitle} will be deleted in approximately {days} days, as per your request.
+
+If you no longer wish to delete your account, you can cancel the scheduled deletion by visiting {boardTitle} before this date.

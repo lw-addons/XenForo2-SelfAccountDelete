@@ -1,0 +1,1 @@
+Your {boardTitle} account will be deleted in {days} days

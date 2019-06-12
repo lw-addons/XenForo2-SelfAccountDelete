@@ -3,9 +3,12 @@
         "hash": "6ffa484c18c3223bc8fef982ec510026"
     },
     "liamw_accountdelete_deletion_method.json": {
-        "hash": "a5ecc862ea72b5343cf8faa83a128a22"
+        "hash": "53fbc9dc1095925a4c69a13b81c54373"
     },
     "liamw_accountdelete_randomise_username.json": {
-        "hash": "ef77ae727861bdea2f5e2353ac2b6378"
+        "hash": "533e1bc6af28bb8132020900f5bcca50"
+    },
+    "liamw_accountdelete_reminder_threshold.json": {
+        "hash": "28e1f0cad6b3cd946627fc33dc3580de"
     }
 }

@@ -1,0 +1,1 @@
+If set to a non-zero value, a reminder email will be sent to members accounts this many days before their account's scheduled deletion date.

@@ -24,6 +24,11 @@
         "version_string": "1.0.0 Beta 4",
         "hash": "513e6ec75c7be3907e0338c4fc03d0de"
     },
+    "email/liamw_accountdelete_delete_imminent.html": {
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "86ce21092da2f7c052af47246c235cd6"
+    },
     "email/liamw_accountdelete_delete_scheduled.html": {
         "version_id": 1000035,
         "version_string": "1.0.0 Beta 5",

@@ -47,9 +47,14 @@ class AccountDelete extends AbstractService
 				$this->executeDeletion();
 			});
 		}
-		else if ($sendEmail)
+		else
 		{
-			$this->sendScheduledEmail();
+			$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $this->repository('LiamW\AccountDelete:AccountDelete')->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+
+			if ($sendEmail)
+			{
+				$this->sendScheduledEmail();
+			}
 		}
 	}
 
@@ -185,7 +190,7 @@ class AccountDelete extends AbstractService
 
 		$mail = XF::mailer()->newMail();
 		$mail->setToUser($this->user);
-		$mail->setTemplate('liamw_accountdelete_delete_reminder', ['user' => $this->user]);
+		$mail->setTemplate('liamw_accountdelete_delete_imminent', ['user' => $this->user]);
 		$mail->queue();
 	}
 

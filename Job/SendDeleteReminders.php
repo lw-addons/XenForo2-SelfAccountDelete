@@ -5,23 +5,23 @@ namespace LiamW\AccountDelete\Job;
 use XF;
 use XF\Job\AbstractJob;
 
-class DeleteAccounts extends AbstractJob
+class SendDeleteReminders extends AbstractJob
 {
 	public function run($maxRunTime)
 	{
 		$startTime = microtime(true);
 
 		$repository = XF::repository('LiamW\AccountDelete:AccountDelete');
-		$toDelete = $repository->findAccountsToDelete()->fetch();
+		$toRemind = $repository->findAccountsToRemind();
 
-		if (!$toDelete->count())
+		if (!$toRemind->count())
 		{
-			$nextDeletionTime = $repository->getNextDeletionTime();
+			$nextRemindTime = $repository->getNextRemindTime();
 
-			if ($nextDeletionTime)
+			if ($nextRemindTime)
 			{
 				$resume = $this->resume();
-				$resume->continueDate = $nextDeletionTime;
+				$resume->continueDate = $nextRemindTime;
 
 				return $resume;
 			}
@@ -33,9 +33,9 @@ class DeleteAccounts extends AbstractJob
 			}
 		}
 
-		foreach ($toDelete AS $item)
+		foreach ($toRemind AS $item)
 		{
-			XF::service('LiamW\AccountDelete:AccountDelete', $item->User)->executeDeletion();
+			XF::service('LiamW\AccountDelete:AccountDelete', $item->User)->sendReminderEmail();
 
 			if (microtime(true) - $startTime >= $maxRunTime)
 			{
@@ -48,7 +48,7 @@ class DeleteAccounts extends AbstractJob
 
 	public function getStatusMessage()
 	{
-		return \XF::phrase('liamw_accountdelete_deleting_accounts...');
+		return '~~Sending user self deletion reminders~~';
 	}
 
 	public function canCancel()
@@ -60,4 +60,5 @@ class DeleteAccounts extends AbstractJob
 	{
 		return false;
 	}
+
 }

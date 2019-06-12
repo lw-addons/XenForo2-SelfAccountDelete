@@ -5,5 +5,5 @@
     "callback_method": "controllerPreDispatch",
     "active": true,
     "hint": "",
-    "description": ""
+    "description": "Override response for accounts pending deletion."
 }

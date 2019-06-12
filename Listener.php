@@ -30,6 +30,32 @@ class Listener
 		}
 	}
 
+	public static function optionEntityPostSave(\XF\Mvc\Entity\Entity $entity)
+	{
+		XF::runLater(function() use ($entity)
+		{
+			/** @var XF\Entity\Option $entity */
+			if ($entity->isChanged('option_value'))
+			{
+				if ($entity->option_id == 'liamw_accountdelete_deletion_delay')
+				{
+					XF::app()->jobManager()->enqueueLater('lwAccountDeleteRunner', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+				}
+				elseif ($entity->option_id == 'liamw_accountdelete_reminder_threshold')
+				{
+					if ($entity->option_value)
+					{
+						XF::app()->jobManager()->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+					}
+					else
+					{
+						XF::app()->jobManager()->cancelUniqueJob('lwAccountDeleteReminder');
+					}
+				}
+			}
+		});
+	}
+
 	public static function userEntityPostDelete(\XF\Mvc\Entity\Entity $entity)
 	{
 		if ($entity->getOption('admin_edit') === true && $entity->PendingAccountDeletion)

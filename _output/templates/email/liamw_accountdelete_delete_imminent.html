@@ -1,0 +1,5 @@
+<mail:subject>
+	{{ phrase('liamw_accountdelete_your_x_account_will_be_deleted_in_y_days', {'boardTitle': $xf.options.boardTitle, 'days': $days}) }}
+</mail:subject>
+
+{{ phrase('liamw_accountdelete_delete_imminent_body_html', {'name': $user.username, 'boardTitle': $xf.options.boardTitle, 'days': $days}) }}

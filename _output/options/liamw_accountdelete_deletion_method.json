@@ -11,6 +11,6 @@
     "validation_method": "",
     "default_value": "{\"mode\":\"disable\",\"delete_options\":{\"ban_email\":false},\"disable_options\":{\"remove_email\":false,\"ban_email\":false,\"remove_password\":false}}",
     "relations": {
-        "users": 1101
+        "users": 1110
     }
 }
