@@ -69,8 +69,6 @@ class AccountDelete extends AbstractService
 
 	public function executeDeletion($sendEmail = true)
 	{
-		XF::dumpToFile($this->user->PendingAccountDeletion);
-
 		if (!$this->user->PendingAccountDeletion || $this->user->PendingAccountDeletion->end_date > XF::$time)
 		{
 			return;
@@ -128,13 +126,7 @@ class AccountDelete extends AbstractService
 				}
 
 				$this->user->user_state = 'disabled';
-
-				if (!$this->user->save(false))
-				{
-					XF::dumpToFile(array_map(function($phrase) {
-						return (string)$phrase;
-					}, $this->user->getErrors()));
-				}
+				$this->user->save(false);
 				break;
 			case 'delete':
 				/** @var Delete $userDeleteService */
@@ -158,7 +150,7 @@ class AccountDelete extends AbstractService
 				}
 				break;
 			default:
-				throw new UnexpectedValueException('Self Account Deletion: unknown deletion method');
+				throw new UnexpectedValueException('Unknown option value encountered during member deletion');
 		}
 
 		$pendingAccountDeletion->completion_date = XF::$time;
