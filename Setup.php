@@ -69,6 +69,6 @@ class Setup extends AbstractSetup
 
 	public function uninstall(array $stepParams = [])
 	{
-		$this->schemaManager()->dropTable('xf_liamw_accountdelete_deletions');
+		$this->schemaManager()->dropTable('xf_liamw_accountdelete_account_deletions');
 	}
 }
