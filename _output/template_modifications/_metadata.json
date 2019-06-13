@@ -1,4 +1,13 @@
 {
+    "admin/liamw_accountdelete_user_edit.json": {
+        "hash": "ce90edd1098a41bd21adee7322c6c682"
+    },
+    "admin/liamw_accountdelete_user_edit_2.json": {
+        "hash": "66334aa17715f5a9c6e5c7eb2d9e3ac7"
+    },
+    "public/liamw_accountdelete_account_visitor_menu.json": {
+        "hash": "9c7baef36b323fb77f869889551d6a1d"
+    },
     "public/liamw_accountdelete_account_wrapper.json": {
         "hash": "087e6a0681d11387d3cba3382df499b0"
     }

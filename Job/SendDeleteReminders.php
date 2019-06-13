@@ -48,7 +48,7 @@ class SendDeleteReminders extends AbstractJob
 
 	public function getStatusMessage()
 	{
-		return '~~Sending user self deletion reminders~~';
+		return \XF::phrase('liamw_accountdelete_sending_user_deletion_reminders');
 	}
 
 	public function canCancel()

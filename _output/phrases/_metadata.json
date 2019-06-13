@@ -1,9 +1,9 @@
 {
     "admin_navigation.liamw_accountdelete_log.txt": {
         "global_cache": false,
-        "version_id": 1000035,
-        "version_string": "1.0.0 Beta 5",
-        "hash": "c551a8d0d5b786e9aa0a9f4d0e6fe69d"
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "caa66f2004399555d1d3583a0119225a"
     },
     "liamw_accountdelete_account_delete_pending.txt": {
         "global_cache": false,
@@ -35,12 +35,6 @@
         "version_string": "1.0.0 Beta 4",
         "hash": "e24fef9f2667076763c79965b5e46bde"
     },
-    "liamw_accountdelete_account_deletion_log.txt": {
-        "global_cache": false,
-        "version_id": 1000035,
-        "version_string": "1.0.0 Beta 5",
-        "hash": "c551a8d0d5b786e9aa0a9f4d0e6fe69d"
-    },
     "liamw_accountdelete_account_deletion_scheduled.txt": {
         "global_cache": false,
         "version_id": 1000011,
@@ -59,12 +53,6 @@
         "version_string": "1.0.0 Beta 5",
         "hash": "9f7fe0eabc02a6c95514d4ec8d9a7b51"
     },
-    "liamw_accountdelete_as_you_are_staff_you_cannot_use_this_system.txt": {
-        "global_cache": false,
-        "version_id": 1000034,
-        "version_string": "1.0.0 Beta 4",
-        "hash": "a73d1cd38b060a54072634556b199917"
-    },
     "liamw_accountdelete_automated_ban_user_deleted_self.txt": {
         "global_cache": false,
         "version_id": 1000035,
@@ -77,17 +65,23 @@
         "version_string": "1.0.0 Beta 5",
         "hash": "206c1ea4acad81bb0b18f6898dd5adee"
     },
-    "liamw_accountdelete_cancel_account_deletion.txt": {
-        "global_cache": false,
-        "version_id": 1000035,
-        "version_string": "1.0.0 Beta 5",
-        "hash": "2cd06146e8500b6d6924d17f649e17cd"
-    },
     "liamw_accountdelete_cancel_deletion.txt": {
         "global_cache": false,
         "version_id": 1000011,
         "version_string": "1.0.0 Alpha 1",
         "hash": "5280bdf968a4cb86f34b09e947dba1e7"
+    },
+    "liamw_accountdelete_cancel_scheduled_deletion.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "641b3b928c8957a65cd56bf75c96f569"
+    },
+    "liamw_accountdelete_cancel_scheduled_user_deletion.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "8d788f8ad604ae21cbbe03427c3c2a59"
     },
     "liamw_accountdelete_cancelled.txt": {
         "global_cache": false,
@@ -136,6 +130,12 @@
         "version_id": 1000035,
         "version_string": "1.0.0 Beta 5",
         "hash": "a9f95780069025be88292b3c0c8594ee"
+    },
+    "liamw_accountdelete_deletion_reason.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "c526af88c617043b9b6687fa0e6ac7fa"
     },
     "liamw_accountdelete_grace_explain.txt": {
         "global_cache": false,
@@ -202,6 +202,42 @@
         "version_id": 1000035,
         "version_string": "1.0.0 Beta 5",
         "hash": "150d4816f993d322e1b070b569cea64a"
+    },
+    "liamw_accountdelete_sending_user_deletion_reminders.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "a3030611e8aff8c22ad89a2ede0550b3"
+    },
+    "liamw_accountdelete_this_account_is_scheduled_for_deletion_and_will_be_deleted_on_x.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "5ec1d7802090e0687e1ecc78f7be5ef6"
+    },
+    "liamw_accountdelete_this_scheduled_account_deletion_cannot_be_cancelled_as_it_is_not_pending.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "c75274bf0a6efcc8dd89940edea6ea99"
+    },
+    "liamw_accountdelete_user_deletion_log.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "caa66f2004399555d1d3583a0119225a"
+    },
+    "liamw_accountdelete_why_you_deleting_your_account.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "b6ef14272b3cfe4b76b4768fea3ca2d1"
+    },
+    "liamw_accountdelete_you_cannot_delete_your_account_using_this_system_as_you_member_of.txt": {
+        "global_cache": false,
+        "version_id": 1010010,
+        "version_string": "1.1.0 Alpha",
+        "hash": "1cb95d01e89079c9d795f02d80a1f1e8"
     },
     "liamw_accountdelete_your_x_account_will_be_deleted_in_y_days.txt": {
         "global_cache": false,

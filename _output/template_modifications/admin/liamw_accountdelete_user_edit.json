@@ -1,0 +1,9 @@
+{
+    "template": "user_edit",
+    "description": "",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<div class=\"block\">",
+    "replace": "$0\n<xf:if is=\"$user.PendingAccountDeletion\">\n\t<div class=\"blockMessage blockMessage--error\">\n\t\t{{ phrase('liamw_accountdelete_this_account_is_scheduled_for_deletion_and_will_be_deleted_on_x', {'end_date': date_time($user.PendingAccountDeletion.end_date)}) }} \n\t</div>\n</xf:if>"
+}

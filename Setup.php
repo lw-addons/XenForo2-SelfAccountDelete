@@ -48,6 +48,25 @@ class Setup extends AbstractSetup
 		});
 	}
 
+	public function postUpgrade($previousVersion, array &$stateChanges)
+	{
+		if ($previousVersion < 1010031)
+		{
+			// Schedule the reminder/deletion jobs
+			$repository = \XF::repository('LiamW\AccountDelete:AccountDelete');
+
+			if ($nextRemindTime = $repository->getNextRemindTime())
+			{
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $nextRemindTime, 'LiamW\AccountDelete:SendDeleteReminders');
+			}
+
+			if ($nextDeletionTime = $repository->getNextDeletionTime())
+			{
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $nextDeletionTime, 'LiamW\AccountDelete:DeleteAccounts');
+			}
+		}
+	}
+
 	public function uninstall(array $stepParams = [])
 	{
 		$this->schemaManager()->dropTable('xf_liamw_accountdelete_deletions');

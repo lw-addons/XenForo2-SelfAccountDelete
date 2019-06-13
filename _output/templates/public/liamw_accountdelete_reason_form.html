@@ -1,0 +1,16 @@
+<xf:title>{{ phrase('liamw_accountdelete_deletion_reason') }}</xf:title>
+
+<xf:form action="{{ link('account/delete') }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+
+			<xf:textarearow label="{{ phrase('reason') }}" placeholder="{{ phrase('liamw_accountdelete_why_you_deleting_your_account') }}" rows="5" name="reason" rowtype="fullWidth noLabel" />
+
+		</div>
+
+		<xf:submitrow icon="confirm" rowtype="simple" />
+
+		<xf:hiddenval name="confirmation" value="1" />
+		<xf:hiddenval name="reason_requested" value="1" />
+	</div>
+</xf:form>

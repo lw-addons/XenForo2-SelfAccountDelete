@@ -1,0 +1,9 @@
+{
+    "template": "user_edit",
+    "description": "",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<!--[XF:actions_menu:bottom]-->",
+    "replace": "<xf:if is=\"$user.PendingAccountDeletion\">\n\t<a href=\"{{ link('logs/account-deletion/cancel', $user.PendingAccountDeletion) }}\" class=\"menu-linkRow\" data-xf-click=\"overlay\">{{ phrase('liamw_accountdelete_cancel_scheduled_deletion') }}</a>\n</xf:if>\n\n$0"
+}

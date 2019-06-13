@@ -18,7 +18,7 @@ class Account extends XFCP_Account
 
 		if (XF::visitor()->is_staff || XF::visitor()->is_admin || XF::visitor()->is_moderator)
 		{
-			return $this->error(XF::phrase('liamw_accountdelete_as_you_are_staff_you_cannot_use_this_system'));
+			return $this->noPermission(\XF::phrase('liamw_accountdelete_you_cannot_delete_your_account_using_this_system_as_you_member_of'));
 		}
 
 		$this->assertAccountDeletePasswordVerified();
@@ -32,9 +32,19 @@ class Account extends XFCP_Account
 				return $this->error(XF::phrase('liamw_accountdelete_please_confirm_deletion_by_checking_the_checkbox'));
 			}
 
+			if (!$this->filter('reason_requested', 'bool'))
+			{
+				return $this->view('LiamW\AccountDelete:AccountDelete\Reason', 'liamw_accountdelete_reason_form');
+			}
+
+			if (!$reason = $this->filter('reason', 'str'))
+			{
+				return $this->error('~~Please enter a reason for deleting your account~~');
+			}
+
 			/** @var AccountDelete $deleteService */
 			$deleteService = $this->service('LiamW\AccountDelete:AccountDelete', XF::visitor(), $this);
-			$deleteService->scheduleDeletion();
+			$deleteService->scheduleDeletion($reason);
 
 			return $this->redirect($this->buildLink('index'), XF::phrase('liamw_accountdelete_account_deletion_scheduled'));
 		}

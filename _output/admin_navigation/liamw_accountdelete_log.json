@@ -1,9 +1,9 @@
 {
     "parent_navigation_id": "logsUser",
-    "display_order": 50,
+    "display_order": 210,
     "link": "logs/account-deletion",
     "icon": "",
-    "admin_permission_id": "viewLogs",
+    "admin_permission_id": "user",
     "debug_only": false,
     "development_only": false,
     "hide_no_children": false

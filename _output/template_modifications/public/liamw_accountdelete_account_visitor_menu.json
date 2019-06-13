@@ -1,0 +1,9 @@
+{
+    "template": "account_visitor_menu",
+    "description": "",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<a href=\"{{ link('logout', null, {'t': csrf_token()}) }}\" class=\"menu-linkRow\">{{ phrase('log_out') }}</a>",
+    "replace": "<ul class=\"listPlain listColumns listColumns--narrow listColumns--together\">\n\t<li>$0</li>\n\t<li><a href=\"{{ link('account/delete') }}\" class=\"menu-linkRow\">{{ phrase('liamw_accountdelete_delete_account') }}</a></li>\n</ul>"
+}

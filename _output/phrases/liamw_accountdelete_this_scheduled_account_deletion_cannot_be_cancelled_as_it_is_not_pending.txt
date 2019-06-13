@@ -1,0 +1,1 @@
+This scheduled account deletion cannot be cancelled as it is not pending.

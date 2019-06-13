@@ -25,16 +25,18 @@ class Log extends XFCP_Log
 			'total' => $accountDeletionsFinder->total()
 		];
 
-		return $this->view('Log\AccountDeletion', 'liamw_accountdelete_account_deletion_log', $viewParams);
+		return $this->view('Log\AccountDeletion', 'liamw_accountdelete_user_delete_log', $viewParams);
 	}
 
 	public function actionAccountDeletionCancel(ParameterBag $params)
 	{
+		$this->assertAdminPermission('user');
+
 		$accountDelete = $this->assertDeletionExists($params['deletion_id']);
 
 		if ($accountDelete->status != 'pending' || !$accountDelete->User)
 		{
-			return $this->error("This account deletion cannot be cancelled as it has already been completed.");
+			return $this->error(\XF::phrase('liamw_accountdelete_this_scheduled_account_deletion_cannot_be_cancelled_as_it_is_not_pending'));
 		}
 
 		if ($this->isPost())
@@ -49,7 +51,7 @@ class Log extends XFCP_Log
 				'accountDeletion' => $accountDelete
 			];
 
-			return $this->view('XF:Delete\Delete', 'liamw_accountdelete_account_deletion_cancel', $viewParams);
+			return $this->view('XF:Delete\Delete', 'liamw_accountdelete_user_delete_cancel', $viewParams);
 		}
 	}
 

@@ -25,7 +25,7 @@ class AccountDelete extends AbstractService
 		$this->controller = $controller;
 	}
 
-	public function scheduleDeletion($sendEmail = true, $immediateExecution = true)
+	public function scheduleDeletion($reason, $sendEmail = true, $immediateExecution = true)
 	{
 		if (!$this->controller)
 		{
@@ -34,6 +34,7 @@ class AccountDelete extends AbstractService
 
 		/** @var \LiamW\AccountDelete\Entity\AccountDelete $accountDeletion */
 		$accountDeletion = $this->user->getRelationOrDefault('PendingAccountDeletion');
+		$accountDeletion->reason = $reason;
 		$this->user->save();
 
 		/** @var Login $loginPlugin */
