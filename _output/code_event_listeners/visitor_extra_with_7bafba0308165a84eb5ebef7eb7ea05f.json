@@ -1,0 +1,9 @@
+{
+    "event_id": "visitor_extra_with",
+    "execute_order": 10,
+    "callback_class": "\\LiamW\\AccountDelete\\Listener",
+    "callback_method": "visitorExtraWith",
+    "active": true,
+    "hint": "",
+    "description": ""
+}

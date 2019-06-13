@@ -12,8 +12,3 @@ namespace LiamW\AccountDelete\XF\Pub\Controller
 {
 	class XFCP_Account extends \XF\Pub\Controller\Account {}
 }
-
-namespace LiamW\AccountDelete\XF\Repository
-{
-	class XFCP_User extends \XF\Repository\User {}
-}

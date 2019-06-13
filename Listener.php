@@ -93,4 +93,12 @@ class Listener
 			'conditions' => ['user_id', ['status', '=', 'pending']]
 		];
 	}
+
+	public static function visitorExtraWith(array &$with)
+	{
+		if (XF::app() instanceof XF\Pub\App)
+		{
+			$with[] = 'PendingAccountDeletion';
+		}
+	}
 }
