@@ -14,7 +14,7 @@ class Listener
 {
 	public static function controllerPreDispatch(Controller $controller, $action, ParameterBag $params)
 	{
-		if (XF::visitor()->PendingAccountDeletion && !($controller instanceof Account && ($action == 'Delete' || $action == 'DeleteCancel')) && !$controller->isPost() && !$controller->request()
+		if ($controller->app() instanceof XF\Pub\App && XF::visitor()->PendingAccountDeletion && !($controller instanceof Account && ($action == 'Delete' || $action == 'DeleteCancel')) && !$controller->isPost() && !$controller->request()
 				->isXhr())
 		{
 			if ($controller->request()->getRoutePath() != '')
