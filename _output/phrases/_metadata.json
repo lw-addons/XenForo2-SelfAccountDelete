@@ -179,6 +179,12 @@
         "version_string": "1.0.0 Beta 5",
         "hash": "926344a400d478ed298213fd553b5384"
     },
+    "liamw_accountdelete_please_enter_reason_for_deleting_your_account.txt": {
+        "global_cache": false,
+        "version_id": 1010033,
+        "version_string": "1.1.0 Beta 3",
+        "hash": "45743558e317ecdd528aca9f82f06880"
+    },
     "liamw_accountdelete_remove_email.txt": {
         "global_cache": false,
         "version_id": 1000035,

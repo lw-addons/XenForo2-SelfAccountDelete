@@ -61,7 +61,7 @@ class Listener
 
 	public static function userEntityPostDelete(\XF\Mvc\Entity\Entity $entity)
 	{
-		if ($entity->getOption('admin_edit') === true && $entity->PendingAccountDeletion)
+		if ($entity->getOption('liamw_accountdelete_log_manual') === true && $entity->PendingAccountDeletion)
 		{
 			$entity->PendingAccountDeletion->status = 'complete_manual';
 			$entity->PendingAccountDeletion->completion_date = XF::$time;
@@ -71,7 +71,7 @@ class Listener
 
 	public static function userEntityPostSave(\XF\Mvc\Entity\Entity $entity)
 	{
-		if ($entity->getOption('admin_edit') === true && $entity->PendingAccountDeletion && $entity->isStateChanged('user_state', 'disabled') == 'enter')
+		if ($entity->getOption('liamw_accountdelete_log_manual') === true && $entity->PendingAccountDeletion && $entity->isStateChanged('user_state', 'disabled') == 'enter')
 		{
 			$entity->PendingAccountDeletion->status = 'complete_manual';
 			$entity->PendingAccountDeletion->completion_date = XF::$time;
@@ -92,6 +92,8 @@ class Listener
 			'type' => Entity::TO_ONE,
 			'conditions' => ['user_id', ['status', '=', 'pending']]
 		];
+
+		$structure->options['liamw_accountdelete_log_manual'] = true;
 	}
 
 	public static function visitorExtraWith(array &$with)

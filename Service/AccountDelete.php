@@ -10,18 +10,27 @@ use XF\ControllerPlugin\Login;
 use XF\Entity\User;
 use XF\Mvc\Controller;
 use XF\Service\AbstractService;
-use XF\Service\User\Delete;
 
 class AccountDelete extends AbstractService
 {
 	protected $user;
+	protected $originalUsername;
+	protected $userEmail;
 	protected $controller;
+
+	protected $renameTo;
+	protected $banEmail;
+	protected $removeEmail;
+
+	protected $sendEmail;
 
 	public function __construct(App $app, User $user, Controller $controller = null)
 	{
 		parent::__construct($app);
 
 		$this->user = $user;
+		$this->originalUserName = $user->username;
+		$this->userEmail = $user->email;
 		$this->controller = $controller;
 	}
 
@@ -111,32 +120,20 @@ class AccountDelete extends AbstractService
 			return;
 		}
 
-		$pendingAccountDeletion = $this->user->PendingAccountDeletion;
+		$this->sendEmail = $sendEmail;
+
 		$methodOption = XF::options()->liamw_accountdelete_deletion_method;
+
+		if (XF::options()->liamw_accountdelete_randomise_username)
+		{
+			$this->rename();
+		}
 
 		switch ($methodOption['mode'])
 		{
 			case 'disable':
-				if (XF::options()->liamw_accountdelete_randomise_username)
-				{
-					$this->user->username = $this->repository('LiamW\AccountDelete:AccountDelete')->getDeletedUserUsername($this->user);
-				}
-
-				if ($methodOption['disable_options']['remove_email'])
-				{
-					if ($methodOption['disable_options']['ban_email'])
-					{
-						$email = $this->user->email;
-
-						if (!$this->repository('XF:Banning')->isEmailBanned($email, XF::app()->get('bannedEmails')))
-						{
-							$this->repository('XF:Banning')->banEmail($email, \XF::phrase('liamw_accountdelete_automated_ban_user_deleted_self'), $this->user);
-						}
-					}
-
-					// Entity::setTrusted skips verification
-					$this->user->setTrusted('email', '');
-				}
+				$this->removeEmail($methodOption['disable_options']['remove_email']);
+				$this->banEmail($methodOption['disable_options']['ban_email']);
 
 				if ($methodOption['disable_options']['remove_password'])
 				{
@@ -162,41 +159,141 @@ class AccountDelete extends AbstractService
 					}
 				}
 
-				$this->user->user_state = 'disabled';
-				$this->user->save(false);
+				$this->doDisable();
 				break;
 			case 'delete':
-				/** @var Delete $userDeleteService */
-				$userDeleteService = $this->service('XF:User\Delete', $this->user);
+				$this->banEmail($methodOption['delete_options']['ban_email']);
 
-				if (XF::options()->liamw_accountdelete_randomise_username)
-				{
-					$userDeleteService->renameTo($this->repository('LiamW\AccountDelete:AccountDelete')->getDeletedUserUsername($this->user));
-				}
-
-				$userDeleteService->delete();
-
-				if ($methodOption['delete_options']['ban_email'])
-				{
-					$email = $this->user->email;
-
-					if (!$this->repository('XF:Banning')->isEmailBanned($email, XF::app()->get('bannedEmails')))
-					{
-						$this->repository('XF:Banning')->banEmail($email, \XF::phrase('liamw_accountdelete_automated_ban_user_deleted_self'), $this->user);
-					}
-				}
+				$this->doDelete();
 				break;
 			default:
 				throw new UnexpectedValueException('Unknown option value encountered during member deletion');
 		}
 
-		$pendingAccountDeletion->completion_date = XF::$time;
-		$pendingAccountDeletion->status = "complete";
-		$pendingAccountDeletion->save();
+		$this->finaliseDeleteDisable();
+	}
 
-		if ($sendEmail)
+	protected function rename()
+	{
+		$this->renameTo($this->repository('LiamW\AccountDelete:AccountDelete')->getDeletedUserUsername($this->user));
+	}
+
+	protected function renameTo($name)
+	{
+		if ($name === $this->user->username)
+		{
+			$this->renameTo = null;
+		}
+		else
+		{
+			$this->renameTo = $name;
+		}
+	}
+
+	protected function banEmail($option)
+	{
+		$this->banEmail = $option;
+	}
+
+	protected function removeEmail($option)
+	{
+		$this->removeEmail = $option;
+	}
+
+	protected function doRename()
+	{
+		if ($this->renameTo)
+		{
+			$this->user->setTrusted('username', $this->renameTo);
+			$this->user->save();
+		}
+	}
+
+	protected function doDelete()
+	{
+		$this->user->setOption('liamw_accountdelete_log_manual', false);
+		$this->user->setOption('enqueue_rename_cleanup', false);
+		$this->user->setOption('enqueue_delete_cleanup', false);
+
+		$this->doRename();
+
+		$this->user->delete();
+	}
+
+	protected function doDisable()
+	{
+		$this->user->setOption('liamw_accountdelete_log_manual', false);
+		$this->user->setOption('enqueue_rename_cleanup', false);
+
+		$this->doRename();
+
+		$this->user->user_state = 'disabled';
+		$this->user->save();
+	}
+
+	protected function finaliseDeleteDisable()
+	{
+		$email = $this->userEmail;
+
+		if ($this->sendEmail)
 		{
 			$this->sendCompletedEmail();
+		}
+
+		if ($email && $this->removeEmail && $this->user->exists())
+		{
+			$this->user->setTrusted('email', '');
+			$this->user->save();
+		}
+
+		if ($email && $this->banEmail)
+		{
+			if (!$this->repository('XF:Banning')->isEmailBanned($email, XF::app()->get('bannedEmails')))
+			{
+				$this->repository('XF:Banning')->banEmail($email, \XF::phrase('liamw_accountdelete_automated_ban_user_deleted_self'), $this->user);
+			}
+		}
+
+		$this->user->PendingAccountDeletion->completion_date = XF::$time;
+		$this->user->PendingAccountDeletion->status = "complete";
+		$this->user->PendingAccountDeletion->save();
+
+		$this->runPostDeleteJobs();
+	}
+
+	protected function runPostDeleteJobs()
+	{
+		$user = $this->user;
+
+		$jobList = [];
+		if ($this->renameTo)
+		{
+			$jobList[] = [
+				'XF:UserRenameCleanUp',
+				[
+					'originalUserId' => $user->user_id,
+					'originalUserName' => $this->originalUsername,
+					'newUserName' => $this->renameTo
+				]
+			];
+		}
+
+		if (!$user->exists())
+		{
+			$jobList[] = [
+				'XF:UserDeleteCleanUp',
+				[
+					'userId' => $user->user_id,
+					'username' => $this->renameTo
+				]
+			];
+		}
+
+		if ($jobList)
+		{
+			$this->app->jobManager()->enqueueUnique('selfAccountDeleteRename' . $user->user_id, 'XF:Atomic', [
+				'execute' => $jobList
+			]);
 		}
 	}
 
@@ -215,14 +312,16 @@ class AccountDelete extends AbstractService
 
 	public function sendReminderEmail()
 	{
+		$pendingDeletion = $this->user->PendingAccountDeletion;
+		$pendingDeletion->reminder_sent = 1;
+		$pendingDeletion->save();
+
+		XF::dumpToFile('saved');
+
 		if (!$this->user->email || $this->user->user_state != 'valid' || $this->user->PendingAccountDeletion->reminder_sent)
 		{
 			return;
 		}
-
-		$pendingDeletion = $this->user->PendingAccountDeletion;
-		$pendingDeletion->reminder_sent = 1;
-		$pendingDeletion->save();
 
 		$mail = XF::mailer()->newMail();
 		$mail->setToUser($this->user);
@@ -245,7 +344,7 @@ class AccountDelete extends AbstractService
 
 	public function sendCompletedEmail()
 	{
-		if (!$this->user->email || $this->user->user_state != 'valid')
+		if (!$this->user->email)
 		{
 			return;
 		}

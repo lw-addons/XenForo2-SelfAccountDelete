@@ -39,7 +39,7 @@ class Account extends XFCP_Account
 
 			if (!$reason = $this->filter('reason', 'str'))
 			{
-				return $this->error('~~Please enter a reason for deleting your account~~');
+				return $this->error(\XF::phrase('liamw_accountdelete_please_enter_reason_for_deleting_your_account'));
 			}
 
 			/** @var AccountDelete $deleteService */
