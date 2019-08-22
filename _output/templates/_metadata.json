@@ -1,8 +1,8 @@
 {
     "admin/liamw_accountdelete_option_template_deletion_method.html": {
-        "version_id": 1000035,
-        "version_string": "1.0.0 Beta 5",
-        "hash": "97e215d31013b928a16f030157120e9e"
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "f2357967df66c337d9223d4f339d1eee"
     },
     "admin/liamw_accountdelete_user_delete_cancel.html": {
         "version_id": 1010010,

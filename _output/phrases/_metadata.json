@@ -298,5 +298,11 @@
         "version_id": 1010010,
         "version_string": "1.1.0 Alpha",
         "hash": "aea2ed409170c4706c95e317591816ea"
+    },
+    "permission.general_lw_deleteAccount.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "6c441eb7f54432a3b52b759777475c1b"
     }
 }

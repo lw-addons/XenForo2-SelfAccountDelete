@@ -21,6 +21,11 @@ class Account extends XFCP_Account
 			return $this->noPermission(\XF::phrase('liamw_accountdelete_you_cannot_delete_your_account_using_this_system_as_you_member_of'));
 		}
 
+		if (!XF::visitor()->hasPermission('general', 'lw_deleteAccount'))
+		{
+			return $this->noPermission();
+		}
+
 		$this->assertAccountDeletePasswordVerified();
 
 		if ($this->isPost())

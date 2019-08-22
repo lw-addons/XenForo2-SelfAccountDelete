@@ -63,14 +63,16 @@ class AccountDelete extends AbstractService
 
 			if ($repository->getNextRemindTime())
 			{
-				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+				$this->app->jobManager()
+					->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
 			}
 			else
 			{
 				$this->app->jobManager()->cancelUniqueJob('lwAccountDeleteReminder');
 			}
 
-			$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+			$this->app->jobManager()
+				->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
 
 			if ($sendEmail)
 			{
@@ -90,7 +92,8 @@ class AccountDelete extends AbstractService
 
 			if ($repository->getNextRemindTime())
 			{
-				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+				$this->app->jobManager()
+					->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
 			}
 			else
 			{
@@ -99,7 +102,8 @@ class AccountDelete extends AbstractService
 
 			if ($repository->getNextDeletionTime())
 			{
-				$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+				$this->app->jobManager()
+					->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
 			}
 			else
 			{
@@ -126,7 +130,8 @@ class AccountDelete extends AbstractService
 
 		if (XF::options()->liamw_accountdelete_randomise_username)
 		{
-			$this->rename();
+			$this->renameTo($this->repository('LiamW\AccountDelete:AccountDelete')
+				->getDeletedUserUsername($this->user));
 		}
 
 		switch ($methodOption['mode'])
@@ -171,11 +176,6 @@ class AccountDelete extends AbstractService
 		}
 
 		$this->finaliseDeleteDisable();
-	}
-
-	protected function rename()
-	{
-		$this->renameTo($this->repository('LiamW\AccountDelete:AccountDelete')->getDeletedUserUsername($this->user));
 	}
 
 	protected function renameTo($name)
@@ -228,6 +228,17 @@ class AccountDelete extends AbstractService
 		$this->doRename();
 
 		$this->user->user_state = 'disabled';
+
+		if ($disabledGroupId = XF::options()->liamw_accountdelete_disabled_usergroup)
+		{
+			$secondaryGroups = $this->user->secondary_group_ids;
+			if (!in_array($disabledGroupId, $secondaryGroups))
+			{
+				$secondaryGroups[] = $disabledGroupId;
+				$this->user->secondary_group_ids = $secondaryGroups;
+			}
+		}
+
 		$this->user->save();
 	}
 
@@ -240,8 +251,10 @@ class AccountDelete extends AbstractService
 			$this->sendCompletedEmail();
 		}
 
+		// Remove email address after sending the completion email
 		if ($email && $this->removeEmail && $this->user->exists())
 		{
+			// setTrusted bypasses validations, allowing us to sent an empty email
 			$this->user->setTrusted('email', '');
 			$this->user->save();
 		}
@@ -291,7 +304,7 @@ class AccountDelete extends AbstractService
 
 		if ($jobList)
 		{
-			$this->app->jobManager()->enqueueUnique('selfAccountDeleteRename' . $user->user_id, 'XF:Atomic', [
+			$this->app->jobManager()->enqueueUnique('selfAccountDeleteCleanup' . $user->user_id, 'XF:Atomic', [
 				'execute' => $jobList
 			]);
 		}
@@ -315,8 +328,6 @@ class AccountDelete extends AbstractService
 		$pendingDeletion = $this->user->PendingAccountDeletion;
 		$pendingDeletion->reminder_sent = 1;
 		$pendingDeletion->save();
-
-		XF::dumpToFile('saved');
 
 		if (!$this->user->email || $this->user->user_state != 'valid' || $this->user->PendingAccountDeletion->reminder_sent)
 		{
