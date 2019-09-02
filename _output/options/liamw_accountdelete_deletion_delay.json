@@ -7,6 +7,6 @@
     "validation_method": "",
     "default_value": "7",
     "relations": {
-        "users": 1100
+        "liamw_memberselfdelete": 10
     }
 }

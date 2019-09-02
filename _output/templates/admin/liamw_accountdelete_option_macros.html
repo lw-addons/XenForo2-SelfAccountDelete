@@ -1,0 +1,46 @@
+<xf:macro name="option_form_block" arg-group="" arg-options="!" arg-userCriteria="!" arg-containerBeforeHtml="">
+	<xf:if is="$options is not empty">
+		<div class="block">
+			<xf:form action="{{ link('options/update') }}" ajax="true" class="block-container">
+				<h2 class="block-tabHeader tabs hScroller" data-xf-init="tabs h-scroller" data-state="replace"
+					role="tablist">
+			<span class="hScroller-scroll">
+				<!--[XF:tabs:start]-->
+					<a class="tabs-tab is-active" role="tab" tabindex="0"
+						id="general-options"
+						aria-controls="general-options"
+						href="{{ link('options/groups', $group) }}#general-options">{{ phrase('general_options') }}</a>
+					<xf:macro template="helper_criteria" name="user_tabs"/>
+				<!--[XF:tabs:end]-->
+				</span>
+				</h2>
+
+				<ul class="tabPanes">
+					<li class="is-active" role="tabpanel" aria-labelledby="general-options">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+
+								<xf:if is="$group">
+									<xf:set var="$curHundred"
+										value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}"/>
+									<xf:if is="{{ $curHundred > $hundred }}">
+										<xf:set var="$hundred" value="{$curHundred}"/>
+										<hr class="formRowSep"/>
+									</xf:if>
+								</xf:if>
+
+								<xf:macro template="option_macros" name="option_row" arg-group="{$group}"
+									arg-option="{$option}"/>
+							</xf:foreach>
+						</div>
+					</li>
+					<xf:macro template="helper_criteria" name="user_panes"
+						arg-criteria="{{ $userCriteria.getCriteriaForTemplate() }}"
+						arg-data="{{ $userCriteria.getExtraTemplateData() }}"/>
+				</ul>
+
+				<xf:submitrow sticky="true" icon="save"/>
+			</xf:form>
+		</div>
+	</xf:if>
+</xf:macro>

@@ -1,0 +1,1 @@
+You are viewing these options via the add-on link. In order to view the user criteria controls, you must access the options via the <a href="{groupLink}">option group</a>.

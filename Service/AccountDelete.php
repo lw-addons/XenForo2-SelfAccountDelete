@@ -13,6 +13,7 @@ use XF\Service\AbstractService;
 
 class AccountDelete extends AbstractService
 {
+	/** @var \LiamW\AccountDelete\XF\Entity\User */
 	protected $user;
 	protected $originalUsername;
 	protected $userEmail;
@@ -21,6 +22,7 @@ class AccountDelete extends AbstractService
 	protected $renameTo;
 	protected $banEmail;
 	protected $removeEmail;
+	protected $addUserGroup;
 
 	protected $sendEmail;
 
@@ -29,7 +31,7 @@ class AccountDelete extends AbstractService
 		parent::__construct($app);
 
 		$this->user = $user;
-		$this->originalUserName = $user->username;
+		$this->originalUsername = $user->username;
 		$this->userEmail = $user->email;
 		$this->controller = $controller;
 	}
@@ -81,7 +83,7 @@ class AccountDelete extends AbstractService
 		}
 	}
 
-	public function cancelDeletion($sendEmail = true)
+	public function cancelDeletion($forced = false, $sendEmail = true)
 	{
 		if ($this->user->PendingAccountDeletion)
 		{
@@ -112,7 +114,7 @@ class AccountDelete extends AbstractService
 
 			if ($sendEmail)
 			{
-				$this->sendCancelledEmail();
+				$this->sendCancelledEmail($forced);
 			}
 		}
 	}
@@ -121,6 +123,13 @@ class AccountDelete extends AbstractService
 	{
 		if (!$this->user->PendingAccountDeletion || $this->user->PendingAccountDeletion->end_date > XF::$time)
 		{
+			return;
+		}
+
+		if (!$this->user->canDeleteSelf())
+		{
+			$this->cancelDeletion(true, $sendEmail);
+
 			return;
 		}
 
@@ -139,6 +148,7 @@ class AccountDelete extends AbstractService
 			case 'disable':
 				$this->removeEmail($methodOption['disable_options']['remove_email']);
 				$this->banEmail($methodOption['disable_options']['ban_email']);
+				$this->addUserGroup($methodOption['disable_options']['disabled_group_id']);
 
 				if ($methodOption['disable_options']['remove_password'])
 				{
@@ -200,6 +210,14 @@ class AccountDelete extends AbstractService
 		$this->removeEmail = $option;
 	}
 
+	/**
+	 * @param int|null $userGroupId
+	 */
+	protected function addUserGroup($userGroupId)
+	{
+		$this->addUserGroup = $userGroupId;
+	}
+
 	protected function doRename()
 	{
 		if ($this->renameTo)
@@ -229,12 +247,12 @@ class AccountDelete extends AbstractService
 
 		$this->user->user_state = 'disabled';
 
-		if ($disabledGroupId = XF::options()->liamw_accountdelete_disabled_usergroup)
+		if ($this->addUserGroup)
 		{
 			$secondaryGroups = $this->user->secondary_group_ids;
-			if (!in_array($disabledGroupId, $secondaryGroups))
+			if (!in_array($this->addUserGroup, $secondaryGroups))
 			{
-				$secondaryGroups[] = $disabledGroupId;
+				$secondaryGroups[] = $this->addUserGroup;
 				$this->user->secondary_group_ids = $secondaryGroups;
 			}
 		}
@@ -244,7 +262,8 @@ class AccountDelete extends AbstractService
 
 	protected function finaliseDeleteDisable()
 	{
-		$email = $this->userEmail;
+		$this->user->setAsSaved('username', $this->originalUsername);
+		$this->user->setAsSaved('email', $this->userEmail);
 
 		if ($this->sendEmail)
 		{
@@ -252,18 +271,19 @@ class AccountDelete extends AbstractService
 		}
 
 		// Remove email address after sending the completion email
-		if ($email && $this->removeEmail && $this->user->exists())
+		if ($this->userEmail && $this->removeEmail && $this->user->exists())
 		{
 			// setTrusted bypasses validations, allowing us to sent an empty email
 			$this->user->setTrusted('email', '');
 			$this->user->save();
 		}
 
-		if ($email && $this->banEmail)
+		if ($this->userEmail && $this->banEmail)
 		{
-			if (!$this->repository('XF:Banning')->isEmailBanned($email, XF::app()->get('bannedEmails')))
+			if (!$this->repository('XF:Banning')->isEmailBanned($this->userEmail, XF::app()->get('bannedEmails')))
 			{
-				$this->repository('XF:Banning')->banEmail($email, \XF::phrase('liamw_accountdelete_automated_ban_user_deleted_self'), $this->user);
+				$this->repository('XF:Banning')
+					->banEmail($this->userEmail, \XF::phrase('liamw_accountdelete_automated_ban_user_deleted_self'), $this->user);
 			}
 		}
 
@@ -319,28 +339,33 @@ class AccountDelete extends AbstractService
 
 		$mail = XF::mailer()->newMail();
 		$mail->setToUser($this->user);
-		$mail->setTemplate('liamw_accountdelete_delete_scheduled', ['user' => $this->user]);
+		$mail->setTemplate('liamw_accountdelete_delete_scheduled');
 		$mail->send();
 	}
 
 	public function sendReminderEmail()
 	{
-		$pendingDeletion = $this->user->PendingAccountDeletion;
-		$pendingDeletion->reminder_sent = 1;
-		$pendingDeletion->save();
-
 		if (!$this->user->email || $this->user->user_state != 'valid' || $this->user->PendingAccountDeletion->reminder_sent)
 		{
 			return;
 		}
 
+		XF::db()->beginTransaction();
+
 		$mail = XF::mailer()->newMail();
 		$mail->setToUser($this->user);
-		$mail->setTemplate('liamw_accountdelete_delete_imminent', ['user' => $this->user]);
+		$mail->setTemplate('liamw_accountdelete_delete_imminent');
 		$mail->queue();
+
+		/** @var \LiamW\AccountDelete\Entity\AccountDelete $pendingDeletion */
+		$pendingDeletion = $this->user->PendingAccountDeletion;
+		$pendingDeletion->reminder_sent = 1;
+		$pendingDeletion->save(true, false);
+
+		XF::db()->commit();
 	}
 
-	public function sendCancelledEmail()
+	public function sendCancelledEmail($forced = false)
 	{
 		if (!$this->user->email || $this->user->user_state != 'valid')
 		{
@@ -349,7 +374,7 @@ class AccountDelete extends AbstractService
 
 		$mail = XF::mailer()->newMail();
 		$mail->setToUser($this->user);
-		$mail->setTemplate('liamw_accountdelete_delete_cancelled', ['user' => $this->user]);
+		$mail->setTemplate('liamw_accountdelete_delete_cancelled', ['forced' => $forced]);
 		$mail->send();
 	}
 
@@ -362,7 +387,7 @@ class AccountDelete extends AbstractService
 
 		$mail = XF::mailer()->newMail();
 		$mail->setToUser($this->user);
-		$mail->setTemplate('liamw_accountdelete_delete_completed', ['user' => $this->user]);
+		$mail->setTemplate('liamw_accountdelete_delete_completed', ['time' => XF::$time]);
 		$mail->send();
 	}
 }

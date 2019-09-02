@@ -19,9 +19,9 @@
     },
     "liamw_accountdelete_account_deletion_cancelled_body.txt": {
         "global_cache": false,
-        "version_id": 1000034,
-        "version_string": "1.0.0 Beta 4",
-        "hash": "cc3eb144f2eb67161bbb9f6d43ef0064"
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "cf91c95554ea57be9772f114b4d0990c"
     },
     "liamw_accountdelete_account_deletion_completed.txt": {
         "global_cache": false,
@@ -35,6 +35,12 @@
         "version_string": "1.0.0 Beta 4",
         "hash": "e24fef9f2667076763c79965b5e46bde"
     },
+    "liamw_accountdelete_account_deletion_force_cancelled_body.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "d270503f17796ec02e4012ae2e3ea1eb"
+    },
     "liamw_accountdelete_account_deletion_scheduled.txt": {
         "global_cache": false,
         "version_id": 1000011,
@@ -46,6 +52,12 @@
         "version_id": 1000034,
         "version_string": "1.0.0 Beta 4",
         "hash": "519373e627dc0d7693ec47ba17a77b8c"
+    },
+    "liamw_accountdelete_add_disabled_users_to_secondary_group.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "5d44cdd1cbbbdac282bf4436c2bdbcb6"
     },
     "liamw_accountdelete_add_users_email_address_to_banned_list_to_prevent_re_registration.txt": {
         "global_cache": false,
@@ -181,8 +193,8 @@
     },
     "liamw_accountdelete_please_enter_reason_for_deleting_your_account.txt": {
         "global_cache": false,
-        "version_id": 1010033,
-        "version_string": "1.1.0 Beta 3",
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
         "hash": "45743558e317ecdd528aca9f82f06880"
     },
     "liamw_accountdelete_remove_email.txt": {
@@ -239,11 +251,23 @@
         "version_string": "1.1.0 Alpha",
         "hash": "b6ef14272b3cfe4b76b4768fea3ca2d1"
     },
+    "liamw_accountdelete_you_cannot_delete_your_account.txt": {
+        "global_cache": false,
+        "version_id": 1020031,
+        "version_string": "1.2.0 Beta 1",
+        "hash": "534e329f4b7df5b35a84099f2c395b84"
+    },
     "liamw_accountdelete_you_cannot_delete_your_account_using_this_system_as_you_member_of.txt": {
         "global_cache": false,
         "version_id": 1010010,
         "version_string": "1.1.0 Alpha",
         "hash": "1cb95d01e89079c9d795f02d80a1f1e8"
+    },
+    "liamw_accountdelete_you_viewing_these_options_via_add_on_link.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "eda59aea8f3ff8f9b5b8436d3508bfb6"
     },
     "liamw_accountdelete_your_x_account_will_be_deleted_in_y_days.txt": {
         "global_cache": false,
@@ -275,6 +299,12 @@
         "version_string": "1.1.0 Alpha",
         "hash": "0eea4a4aa6ba6334e710a586c48fa0e2"
     },
+    "option.liamw_accountdelete_user_criteria.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "0a648f3436125138e08fc7cd2a2e5f8d"
+    },
     "option_explain.liamw_accountdelete_deletion_delay.txt": {
         "global_cache": false,
         "version_id": 1000011,
@@ -298,6 +328,24 @@
         "version_id": 1010010,
         "version_string": "1.1.0 Alpha",
         "hash": "aea2ed409170c4706c95e317591816ea"
+    },
+    "option_explain.liamw_accountdelete_user_criteria.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "2970fc7c2c0a9f0e7cc72507bb347b8a"
+    },
+    "option_group.liamw_memberselfdelete.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "2ae618893ababcc11a2e39bf84dbda3c"
+    },
+    "option_group_description.liamw_memberselfdelete.txt": {
+        "global_cache": false,
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "b06215672121ca4181f51f95f8094ce0"
     },
     "permission.general_lw_deleteAccount.txt": {
         "global_cache": false,

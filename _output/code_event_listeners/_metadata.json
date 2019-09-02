@@ -1,4 +1,7 @@
 {
+    "controller_pre_dispatch_699eebc3e0dcf5e0c8e2bf32676c857f.json": {
+        "hash": "1841fc5aca43bfe57ccd0d6a0ca19d38"
+    },
     "controller_pre_dispatch_f74fc276ab5b4169d8190f07734169c9.json": {
         "hash": "80d10d8e4fbc8cf1d220e0b5ef31f0b3"
     },
@@ -13,6 +16,9 @@
     },
     "entity_structure_3d1c0d1714e2c4ae12dc24b99ef6e43e.json": {
         "hash": "75abe52886e6c443acdead6852d4dc82"
+    },
+    "templater_macro_pre_render_fa6885e0af5ba22194669b7d661e6a63.json": {
+        "hash": "a414716039ecbc647097974c157ef136"
     },
     "visitor_extra_with_7bafba0308165a84eb5ebef7eb7ea05f.json": {
         "hash": "f8dedb83c09caf5569a62fbb4b9f047e"

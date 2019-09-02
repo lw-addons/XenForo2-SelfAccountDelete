@@ -5,7 +5,7 @@
 </mail:subject>
 
 {{ phrase('liamw_accountdelete_account_deletion_completed_body', {
-	'name': $user.username,
+	'name': $xf.toUser.username,
 	'board_title': $xf.options.boardTitle,
-	'date': date($xf->time)
+	'date': date($time)
 }) }}

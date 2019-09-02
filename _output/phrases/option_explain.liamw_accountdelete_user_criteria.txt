@@ -1,0 +1,1 @@
+Please use the tabs at the top of this page to use user criteria to limit users that can use the self delete system. If no criteria is set, it will be ignored. User criteria is in addition to the user group permission, which is still enforced.

@@ -8,6 +8,11 @@ namespace LiamW\AccountDelete\XF\Admin\Controller
 	class XFCP_Log extends \XF\Admin\Controller\Log {}
 }
 
+namespace LiamW\AccountDelete\XF\Entity
+{
+	class XFCP_User extends \XF\Entity\User {}
+}
+
 namespace LiamW\AccountDelete\XF\Pub\Controller
 {
 	class XFCP_Account extends \XF\Pub\Controller\Account {}

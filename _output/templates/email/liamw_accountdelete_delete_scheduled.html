@@ -4,4 +4,4 @@
 }) }}
 </mail:subject>
 
-{{ phrase('liamw_accountdelete_account_marked_for_deletion', {'deleteDate': date($user.PendingAccountDeletion.end_date)}) }}
+{{ phrase('liamw_accountdelete_account_marked_for_deletion', {'deleteDate': date($xf.toUser.PendingAccountDeletion.end_date)}) }}

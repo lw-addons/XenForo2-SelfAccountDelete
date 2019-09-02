@@ -9,7 +9,6 @@ use XF\Mvc\Entity\Structure;
 
 /**
  * COLUMNS
- *
  * @property int deletion_id
  * @property int user_id
  * @property string username
@@ -17,6 +16,7 @@ use XF\Mvc\Entity\Structure;
  * @property int initiation_date
  * @property int|null completion_date
  * @property string status
+ * @property bool reminder_sent
  *
  * GETTERS
  * @property mixed end_date

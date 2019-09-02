@@ -1,8 +1,18 @@
 {
+    "admin/liamw_accountdelete_option_macros.html": {
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "584d2ea3b51d9d44e88555b095bda52e"
+    },
     "admin/liamw_accountdelete_option_template_deletion_method.html": {
         "version_id": 1010035,
         "version_string": "1.1.0 Beta 5",
-        "hash": "f2357967df66c337d9223d4f339d1eee"
+        "hash": "fd0c7b76e4acfc25188a46ebb1ce30b0"
+    },
+    "admin/liamw_accountdelete_option_template_user_criteria.html": {
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "84b14584468c8b522da19a6cce0d1d55"
     },
     "admin/liamw_accountdelete_user_delete_cancel.html": {
         "version_id": 1010010,
@@ -15,24 +25,24 @@
         "hash": "0d925675ba76094c24998e00f6d45752"
     },
     "email/liamw_accountdelete_delete_cancelled.html": {
-        "version_id": 1000035,
-        "version_string": "1.0.0 Beta 5",
-        "hash": "b6363b29f3f7d573ab63badffa4984fc"
+        "version_id": 1020031,
+        "version_string": "1.2.0 Beta 1",
+        "hash": "99acf8f0e239cd904802e288d90c092e"
     },
     "email/liamw_accountdelete_delete_completed.html": {
-        "version_id": 1000034,
-        "version_string": "1.0.0 Beta 4",
-        "hash": "513e6ec75c7be3907e0338c4fc03d0de"
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "0acce8d38f0a4ba9962f0763c75df543"
     },
     "email/liamw_accountdelete_delete_imminent.html": {
-        "version_id": 1010010,
-        "version_string": "1.1.0 Alpha",
-        "hash": "86ce21092da2f7c052af47246c235cd6"
+        "version_id": 1020031,
+        "version_string": "1.2.0 Beta 1",
+        "hash": "e4540e712725c7534ce4464f77fab7d5"
     },
     "email/liamw_accountdelete_delete_scheduled.html": {
-        "version_id": 1000035,
-        "version_string": "1.0.0 Beta 5",
-        "hash": "b93c493828fdd4e575b38a001ddf64ef"
+        "version_id": 1010035,
+        "version_string": "1.1.0 Beta 5",
+        "hash": "4654a5f99ba5e730d7667bbb2fbe76f8"
     },
     "public/liamw_accountdelete.less": {
         "version_id": 1000011,

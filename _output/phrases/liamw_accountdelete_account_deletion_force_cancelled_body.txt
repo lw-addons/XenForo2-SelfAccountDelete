@@ -1,0 +1,6 @@
+{name},<br/>
+<br />
+Your scheduled account deletion at {board_title} has been cancelled as your account can no longer be deleted without staff intervention. For more information, please contact a member of board staff.<br />
+<br />
+Regards,<br />
+{board_title}

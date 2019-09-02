@@ -4,7 +4,14 @@
     }) }}
 </mail:subject>
 
-{{ phrase('liamw_accountdelete_account_deletion_cancelled_body', {
-    'name': $user.username,
+<xf:if is="$forced">
+    {{ phrase('liamw_accountdelete_account_deletion_force_cancelled_body', {
+    'name': $xf.toUser.username,
     'board_title': $xf.options.boardTitle
-}) }}
+    }) }}
+<xf:else />
+    {{ phrase('liamw_accountdelete_account_deletion_cancelled_body', {
+    'name': $xf.toUser.username,
+    'board_title': $xf.options.boardTitle
+    }) }}
+</xf:if>

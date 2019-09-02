@@ -1,14 +1,17 @@
 {
     "liamw_accountdelete_deletion_delay.json": {
-        "hash": "6ffa484c18c3223bc8fef982ec510026"
+        "hash": "5105a93f3e5fde49b65b1d73a4101134"
     },
     "liamw_accountdelete_deletion_method.json": {
-        "hash": "53fbc9dc1095925a4c69a13b81c54373"
+        "hash": "74637c4854c397d64052d12384382a33"
     },
     "liamw_accountdelete_randomise_username.json": {
-        "hash": "533e1bc6af28bb8132020900f5bcca50"
+        "hash": "2bbf5dd71e9451464624ae3ba3b878e0"
     },
     "liamw_accountdelete_reminder_threshold.json": {
-        "hash": "28e1f0cad6b3cd946627fc33dc3580de"
+        "hash": "cab36375e3b6bad5aa8721e1c8fc34c8"
+    },
+    "liamw_accountdelete_user_criteria.json": {
+        "hash": "87a141ae393dbf3dbc918e34829fc68b"
     }
 }

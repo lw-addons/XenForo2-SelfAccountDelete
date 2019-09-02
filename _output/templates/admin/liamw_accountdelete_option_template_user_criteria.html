@@ -1,0 +1,12 @@
+<xf:formrow name="{$inputName}[type]"
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	html="{$listedHtml}">
+	<xf:if is="$xf.reply.template == 'addon_options'">
+		<div class="block-rowMessage block-rowMessage--warning block-rowMessage--iconic">
+			{{ phrase('liamw_accountdelete_you_viewing_these_options_via_add_on_link', {'groupLink': link('options/groups', $option.Relations|first)}) }}
+		</div>
+	<xf:else />
+		{$explainHtml|raw}
+	</xf:if>
+</xf:formrow>

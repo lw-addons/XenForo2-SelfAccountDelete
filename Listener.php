@@ -12,9 +12,30 @@ use XF\Pub\Controller\Account;
 
 class Listener
 {
+	public static function optionControllerPreDispatch(\XF\Mvc\Controller $controller, $action, \XF\Mvc\ParameterBag $params)
+	{
+		if ($controller->isPost() && $action == 'Update' && in_array('liamw_accountdelete_user_criteria', $controller->filter('options_listed', 'array-str')))
+		{
+			$controller->request()->set('options.liamw_accountdelete_user_criteria', $controller->request()
+				->get('user_criteria'));
+			$controller->request()->set('user_criteria', null);
+		}
+	}
+
+	public static function optionFormBlockMacroPreRender(\XF\Template\Templater $templater, &$type, &$template, &$name, array &$arguments, array &$globalVars)
+	{
+		if ($arguments['group']->group_id == 'liamw_memberselfdelete')
+		{
+			$template = 'liamw_accountdelete_option_macros';
+			$userCriteria = XF::app()
+				->criteria('XF:User', $arguments['options']['liamw_accountdelete_user_criteria']->option_value);
+			$arguments['userCriteria'] = $userCriteria;
+		}
+	}
+
 	public static function controllerPreDispatch(Controller $controller, $action, ParameterBag $params)
 	{
-		if ($controller->app() instanceof XF\Pub\App && XF::visitor()->PendingAccountDeletion && !($controller instanceof Account && ($action == 'Delete' || $action == 'DeleteCancel')) && !$controller->isPost() && !$controller->request()
+		if ($controller->app() instanceof XF\Pub\App && XF::visitor()->PendingAccountDeletion && !($controller instanceof XF\Pub\Controller\Logout) && !($controller instanceof Account && ($action == 'Delete' || $action == 'DeleteCancel')) && !$controller->isPost() && !$controller->request()
 				->isXhr())
 		{
 			if ($controller->request()->getRoutePath() != '')
@@ -41,14 +62,20 @@ class Listener
 			{
 				if ($entity->option_id == 'liamw_accountdelete_deletion_delay')
 				{
-					XF::app()->jobManager()->enqueueLater('lwAccountDeleteRunner', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextDeletionTime($entity->option_value), 'LiamW\AccountDelete:DeleteAccounts');
-					XF::app()->jobManager()->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextRemindTime($entity->option_value), 'LiamW\AccountDelete:SendDeleteReminders');
+					XF::app()->jobManager()
+						->enqueueLater('lwAccountDeleteRunner', XF::repository('LiamW\AccountDelete:AccountDelete')
+							->getNextDeletionTime($entity->option_value), 'LiamW\AccountDelete:DeleteAccounts');
+					XF::app()->jobManager()
+						->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')
+							->getNextRemindTime($entity->option_value), 'LiamW\AccountDelete:SendDeleteReminders');
 				}
-				elseif ($entity->option_id == 'liamw_accountdelete_reminder_threshold')
+				else if ($entity->option_id == 'liamw_accountdelete_reminder_threshold')
 				{
 					if ($entity->option_value)
 					{
-						XF::app()->jobManager()->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')->getNextRemindTime(null, $entity->option_value), 'LiamW\AccountDelete:SendDeleteReminders');
+						XF::app()->jobManager()
+							->enqueueLater('lwAccountDeleteReminder', XF::repository('LiamW\AccountDelete:AccountDelete')
+								->getNextRemindTime(null, $entity->option_value), 'LiamW\AccountDelete:SendDeleteReminders');
 					}
 					else
 					{

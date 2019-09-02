@@ -2,6 +2,7 @@
 
 namespace LiamW\AccountDelete\XF\Pub\Controller;
 
+use LiamW\AccountDelete\Utils as AccountDeleteUtils;
 use LiamW\AccountDelete\Service\AccountDelete;
 use XF;
 use XF\Mvc\ParameterBag;
@@ -16,14 +17,9 @@ class Account extends XFCP_Account
 			return $this->view('LiamW\AccountDelete:AccountDelete\Pending', 'liamw_accountdelete_pending');
 		}
 
-		if (XF::visitor()->is_staff || XF::visitor()->is_admin || XF::visitor()->is_moderator)
+		if (!AccountDeleteUtils::visitor()->canDeleteSelf($error))
 		{
-			return $this->noPermission(\XF::phrase('liamw_accountdelete_you_cannot_delete_your_account_using_this_system_as_you_member_of'));
-		}
-
-		if (!XF::visitor()->hasPermission('general', 'lw_deleteAccount'))
-		{
-			return $this->noPermission();
+			return $this->noPermission($error);
 		}
 
 		$this->assertAccountDeletePasswordVerified();

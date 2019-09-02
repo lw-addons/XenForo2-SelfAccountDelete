@@ -1,0 +1,9 @@
+{
+    "event_id": "templater_macro_pre_render",
+    "execute_order": 10,
+    "callback_class": "\\LiamW\\AccountDelete\\Listener",
+    "callback_method": "optionFormBlockMacroPreRender",
+    "active": true,
+    "hint": "admin:option_macros:option_form_block",
+    "description": "admin:option_macros:option_form_block"
+}

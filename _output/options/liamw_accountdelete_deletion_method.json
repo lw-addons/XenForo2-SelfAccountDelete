@@ -1,6 +1,6 @@
 {
-    "edit_format": "template",
-    "edit_format_params": "liamw_accountdelete_option_template_deletion_method",
+    "edit_format": "callback",
+    "edit_format_params": "\\LiamW\\AccountDelete\\Option\\AccountDeleteMethod::renderOption",
     "data_type": "array",
     "sub_options": [
         "mode",
@@ -9,8 +9,8 @@
     ],
     "validation_class": "",
     "validation_method": "",
-    "default_value": "{\"mode\":\"disable\",\"delete_options\":{\"ban_email\":false},\"disable_options\":{\"remove_email\":false,\"ban_email\":false,\"remove_password\":false}}",
+    "default_value": "{\"mode\":\"disable\",\"delete_options\":{\"ban_email\":false},\"disable_options\":{\"remove_email\":false,\"ban_email\":false,\"remove_password\":false,\"disabled_group_id\":null}}",
     "relations": {
-        "users": 1110
+        "liamw_memberselfdelete": 30
     }
 }

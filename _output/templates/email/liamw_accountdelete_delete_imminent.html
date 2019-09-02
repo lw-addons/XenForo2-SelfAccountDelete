@@ -6,7 +6,7 @@
 </mail:subject>
 
 {{ phrase('liamw_accountdelete_delete_imminent_body_html', {
-	'name': $user.username,
+	'name': $xf.toUser.username,
 	'boardTitle': $xf.options.boardTitle,
 	'days': $xf.options.liamw_accountdelete_reminder_threshold
 }) }}

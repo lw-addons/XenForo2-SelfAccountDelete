@@ -31,12 +31,12 @@
 				</xf:option>
 				<xf:option
 					selected="{$option.option_value.disable_options.disabled_group_id}">
-					<xf:label>~~Add disabled users to secondary group~~</xf:label>
+					<xf:label>{{ phrase('liamw_accountdelete_add_disabled_users_to_secondary_group') }}</xf:label>
 					<xf:dependent>
 						<xf:select name="{$inputName}[disable_options][disabled_group_id]" value="{$option.option_value.disable_options.disabled_group_id}">
 							<xf:option value="0">{{ phrase('no_selection')|parens }}</xf:option>
 
-							<!-- TODO: User groups -->
+							<xf:options source="$userGroups" />
 						</xf:select>
 					</xf:dependent>
 				</xf:option>

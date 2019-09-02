@@ -1,0 +1,9 @@
+{
+    "event_id": "controller_pre_dispatch",
+    "execute_order": 10,
+    "callback_class": "\\LiamW\\AccountDelete\\Listener",
+    "callback_method": "optionControllerPreDispatch",
+    "active": true,
+    "hint": "XF\\Admin\\Controller\\Option",
+    "description": "XF\\Admin\\Controller\\Option"
+}

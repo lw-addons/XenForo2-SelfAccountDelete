@@ -1,6 +1,6 @@
 {name},<br/>
 <br />
-Your scheduled account deletion at {board_title} has been cancelled and your account will not be deleted.
+Your scheduled account deletion at {board_title} has been cancelled and your account will not be deleted.<br />
 <br />
 Regards,<br />
 {board_title}
