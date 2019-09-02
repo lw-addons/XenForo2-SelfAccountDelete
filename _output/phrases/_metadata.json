@@ -257,6 +257,12 @@
         "version_string": "1.2.0 Beta 1",
         "hash": "534e329f4b7df5b35a84099f2c395b84"
     },
+    "liamw_accountdelete_you_cannot_delete_your_account_as_you_have_recently_cancelled_pending.txt": {
+        "global_cache": false,
+        "version_id": 1020033,
+        "version_string": "1.2.0 Beta 3",
+        "hash": "71ea1fb7dd48261a96f52585335216b1"
+    },
     "liamw_accountdelete_you_cannot_delete_your_account_using_this_system_as_you_member_of.txt": {
         "global_cache": false,
         "version_id": 1010010,
@@ -299,6 +305,12 @@
         "version_string": "1.1.0 Alpha",
         "hash": "0eea4a4aa6ba6334e710a586c48fa0e2"
     },
+    "option.liamw_accountdelete_repeat_delay.txt": {
+        "global_cache": false,
+        "version_id": 1020033,
+        "version_string": "1.2.0 Beta 3",
+        "hash": "1b1c9fcf0acab14cd086d38a92696e50"
+    },
     "option.liamw_accountdelete_user_criteria.txt": {
         "global_cache": false,
         "version_id": 1010035,
@@ -328,6 +340,12 @@
         "version_id": 1010010,
         "version_string": "1.1.0 Alpha",
         "hash": "aea2ed409170c4706c95e317591816ea"
+    },
+    "option_explain.liamw_accountdelete_repeat_delay.txt": {
+        "global_cache": false,
+        "version_id": 1020033,
+        "version_string": "1.2.0 Beta 3",
+        "hash": "4e248eb2e7103696390d0b26ba3c37ab"
     },
     "option_explain.liamw_accountdelete_user_criteria.txt": {
         "global_cache": false,

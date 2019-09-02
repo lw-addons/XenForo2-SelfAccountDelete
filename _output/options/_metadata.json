@@ -11,6 +11,9 @@
     "liamw_accountdelete_reminder_threshold.json": {
         "hash": "cab36375e3b6bad5aa8721e1c8fc34c8"
     },
+    "liamw_accountdelete_repeat_delay.json": {
+        "hash": "656604c485098ec9f3fa45d8a2e349ac"
+    },
     "liamw_accountdelete_user_criteria.json": {
         "hash": "87a141ae393dbf3dbc918e34829fc68b"
     }

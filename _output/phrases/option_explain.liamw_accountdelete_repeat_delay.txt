@@ -1,0 +1,1 @@
+If set to a non-zero value, users will be unable to access to account deletion page for this many days after last requesting their account be deleted.
