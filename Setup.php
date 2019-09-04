@@ -57,6 +57,11 @@ class Setup extends AbstractSetup
 		});
 	}
 
+	public function upgrade1020034Step1()
+	{
+		$this->db()->query("UPDATE xf_liamw_accountdelete_account_deletions SET status='complete_manual' WHERE status='pending' AND (SELECT user.user_id FROM xf_user AS user WHERE user.user_id=xf_liamw_accountdelete_account_deletions.user_id) IS NULL");
+	}
+
 	public function postUpgrade($previousVersion, array &$stateChanges)
 	{
 		$this->app->jobManager()->cancelUniqueJob('lwAccountDeleteReminder');
