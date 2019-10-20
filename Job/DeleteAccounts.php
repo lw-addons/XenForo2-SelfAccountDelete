@@ -2,6 +2,7 @@
 
 namespace LiamW\AccountDelete\Job;
 
+use LiamW\AccountDelete\Entity\AccountDelete;
 use XF;
 use XF\Job\AbstractJob;
 
@@ -35,7 +36,18 @@ class DeleteAccounts extends AbstractJob
 
 		foreach ($toDelete AS $item)
 		{
-			XF::service('LiamW\AccountDelete:AccountDelete', $item->User)->executeDeletion();
+			/** @var AccountDelete $item */
+
+			if ($item->User && $item->User->exists())
+			{
+				XF::service('LiamW\AccountDelete:AccountDelete', $item->User)->executeDeletion();
+			}
+			else
+			{
+				// User has already been deleted, but has not been marked as such... fix that.
+				$item->status = 'complete';
+				$item->save();
+			}
 
 			if (microtime(true) - $startTime >= $maxRunTime)
 			{

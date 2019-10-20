@@ -13,10 +13,18 @@ use XF\Service\AbstractService;
 
 class AccountDelete extends AbstractService
 {
-	/** @var \LiamW\AccountDelete\XF\Entity\User */
+	/**
+	 * @var User
+	 */
 	protected $user;
 	protected $originalUsername;
-	protected $userEmail;
+	protected $originalEmail;
+
+	/**
+	 * @var \LiamW\AccountDelete\Entity\AccountDelete
+	 */
+	protected $accountDeletion;
+
 	protected $controller;
 
 	protected $renameTo;
@@ -31,8 +39,9 @@ class AccountDelete extends AbstractService
 		parent::__construct($app);
 
 		$this->user = $user;
+		$this->accountDeletion = $user->PendingAccountDeletion;
 		$this->originalUsername = $user->username;
-		$this->userEmail = $user->email;
+		$this->originalEmail = $user->email;
 		$this->controller = $controller;
 	}
 
@@ -54,7 +63,7 @@ class AccountDelete extends AbstractService
 
 		if ($immediateExecution && $accountDeletion->end_date <= XF::$time)
 		{
-			XF::runLater(function() use ($accountDeletion)
+			XF::runLater(function () use ($accountDeletion)
 			{
 				$this->executeDeletion();
 			});
@@ -65,16 +74,14 @@ class AccountDelete extends AbstractService
 
 			if ($repository->getNextRemindTime())
 			{
-				$this->app->jobManager()
-					->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
 			}
 			else
 			{
 				$this->app->jobManager()->cancelUniqueJob('lwAccountDeleteReminder');
 			}
 
-			$this->app->jobManager()
-				->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+			$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
 
 			if ($sendEmail)
 			{
@@ -85,17 +92,16 @@ class AccountDelete extends AbstractService
 
 	public function cancelDeletion($forced = false, $sendEmail = true)
 	{
-		if ($this->user->PendingAccountDeletion)
+		if ($this->accountDeletion)
 		{
-			$this->user->PendingAccountDeletion->status = "cancelled";
-			$this->user->PendingAccountDeletion->save();
+			$this->accountDeletion->status = "cancelled";
+			$this->accountDeletion->save();
 
 			$repository = $this->repository('LiamW\AccountDelete:AccountDelete');
 
 			if ($repository->getNextRemindTime())
 			{
-				$this->app->jobManager()
-					->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteReminder', $repository->getNextRemindTime(), 'LiamW\AccountDelete:SendDeleteReminders');
 			}
 			else
 			{
@@ -104,8 +110,7 @@ class AccountDelete extends AbstractService
 
 			if ($repository->getNextDeletionTime())
 			{
-				$this->app->jobManager()
-					->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
+				$this->app->jobManager()->enqueueLater('lwAccountDeleteRunner', $repository->getNextDeletionTime(), 'LiamW\AccountDelete:DeleteAccounts');
 			}
 			else
 			{
@@ -121,7 +126,7 @@ class AccountDelete extends AbstractService
 
 	public function executeDeletion($sendEmail = true)
 	{
-		if (!$this->user->PendingAccountDeletion || $this->user->PendingAccountDeletion->end_date > XF::$time)
+		if (!$this->accountDeletion || $this->accountDeletion->end_date > XF::$time)
 		{
 			return;
 		}
@@ -139,8 +144,7 @@ class AccountDelete extends AbstractService
 
 		if (XF::options()->liamw_accountdelete_randomise_username)
 		{
-			$this->renameTo($this->repository('LiamW\AccountDelete:AccountDelete')
-				->getDeletedUserUsername($this->user));
+			$this->renameTo($this->repository('LiamW\AccountDelete:AccountDelete')->getDeletedUserUsername($this->user));
 		}
 
 		switch ($methodOption['mode'])
@@ -262,34 +266,30 @@ class AccountDelete extends AbstractService
 
 	protected function finaliseDeleteDisable()
 	{
-		$this->user->setAsSaved('username', $this->originalUsername);
-		$this->user->setAsSaved('email', $this->userEmail);
-
 		if ($this->sendEmail)
 		{
 			$this->sendCompletedEmail();
 		}
 
 		// Remove email address after sending the completion email
-		if ($this->userEmail && $this->removeEmail && $this->user->exists())
+		if ($this->originalEmail && $this->removeEmail && $this->user->exists())
 		{
 			// setTrusted bypasses validations, allowing us to sent an empty email
 			$this->user->setTrusted('email', '');
 			$this->user->save();
 		}
 
-		if ($this->userEmail && $this->banEmail)
+		if ($this->originalEmail && $this->banEmail)
 		{
-			if (!$this->repository('XF:Banning')->isEmailBanned($this->userEmail, XF::app()->get('bannedEmails')))
+			if (!$this->repository('XF:Banning')->isEmailBanned($this->originalEmail, XF::app()->get('bannedEmails')))
 			{
-				$this->repository('XF:Banning')
-					->banEmail($this->userEmail, \XF::phrase('liamw_accountdelete_automated_ban_user_deleted_self'), $this->user);
+				$this->repository('XF:Banning')->banEmail($this->originalEmail, \XF::phrase('liamw_accountdelete_automated_ban_user_deleted_self'), $this->user);
 			}
 		}
 
-		$this->user->PendingAccountDeletion->completion_date = XF::$time;
-		$this->user->PendingAccountDeletion->status = "complete";
-		$this->user->PendingAccountDeletion->save();
+		$this->accountDeletion->completion_date = XF::$time;
+		$this->accountDeletion->status = "complete";
+		$this->accountDeletion->save();
 
 		$this->runPostDeleteJobs();
 	}
@@ -345,7 +345,7 @@ class AccountDelete extends AbstractService
 
 	public function sendReminderEmail()
 	{
-		if (!$this->user->email || $this->user->user_state != 'valid' || $this->user->PendingAccountDeletion->reminder_sent)
+		if (!$this->user->email || $this->user->user_state != 'valid' || $this->accountDeletion->reminder_sent)
 		{
 			return;
 		}
@@ -358,7 +358,7 @@ class AccountDelete extends AbstractService
 		$mail->queue();
 
 		/** @var \LiamW\AccountDelete\Entity\AccountDelete $pendingDeletion */
-		$pendingDeletion = $this->user->PendingAccountDeletion;
+		$pendingDeletion = $this->accountDeletion;
 		$pendingDeletion->reminder_sent = 1;
 		$pendingDeletion->save(true, false);
 
@@ -380,13 +380,14 @@ class AccountDelete extends AbstractService
 
 	public function sendCompletedEmail()
 	{
-		if (!$this->user->email)
+		if (!$this->originalEmail)
 		{
 			return;
 		}
 
 		$mail = XF::mailer()->newMail();
-		$mail->setToUser($this->user);
+		$mail->setTo($this->originalEmail, $this->originalUsername);
+		$mail->setLanguage(\XF::app()->language($this->user->language_id));
 		$mail->setTemplate('liamw_accountdelete_delete_completed', ['time' => XF::$time]);
 		$mail->send();
 	}
