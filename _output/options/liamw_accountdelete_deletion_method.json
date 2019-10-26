@@ -7,8 +7,8 @@
         "delete_options",
         "disable_options"
     ],
-    "validation_class": "",
-    "validation_method": "",
+    "validation_class": "\\LiamW\\AccountDelete\\Option\\AccountDeleteMethod",
+    "validation_method": "verifyOption",
     "default_value": "{\"mode\":\"disable\",\"delete_options\":{\"ban_email\":false},\"disable_options\":{\"remove_email\":false,\"ban_email\":false,\"remove_password\":false,\"disabled_group_id\":null}}",
     "relations": {
         "liamw_memberselfdelete": 30
