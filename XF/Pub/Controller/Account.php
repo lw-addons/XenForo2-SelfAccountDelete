@@ -2,8 +2,8 @@
 
 namespace LiamW\AccountDelete\XF\Pub\Controller;
 
-use LiamW\AccountDelete\Utils as AccountDeleteUtils;
 use LiamW\AccountDelete\Service\AccountDelete;
+use LiamW\AccountDelete\Utils as AccountDeleteUtils;
 use XF;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
@@ -33,14 +33,18 @@ class Account extends XFCP_Account
 				return $this->error(XF::phrase('liamw_accountdelete_please_confirm_deletion_by_checking_the_checkbox'));
 			}
 
-			if (!$this->filter('reason_requested', 'bool'))
+			$reason = null;
+			if (XF::options()->liamw_accountdelete_reason['request'])
 			{
-				return $this->view('LiamW\AccountDelete:AccountDelete\Reason', 'liamw_accountdelete_reason_form');
-			}
+				if (!$this->filter('reason_requested', 'bool'))
+				{
+					return $this->view('LiamW\AccountDelete:AccountDelete\Reason', 'liamw_accountdelete_reason_form');
+				}
 
-			if (!$reason = $this->filter('reason', 'str'))
-			{
-				return $this->error(\XF::phrase('liamw_accountdelete_please_enter_reason_for_deleting_your_account'));
+				if (XF::options()->liamw_accountdelete_reason['require'] && !($reason = $this->filter('reason', '?str')))
+				{
+					return $this->error(\XF::phrase('liamw_accountdelete_please_enter_reason_for_deleting_your_account'));
+				}
 			}
 
 			/** @var AccountDelete $deleteService */
@@ -76,7 +80,7 @@ class Account extends XFCP_Account
 
 	protected function assertAccountDeletePasswordVerified()
 	{
-		$this->assertPasswordVerified(300, null, function($view)
+		$this->assertPasswordVerified(300, null, function ($view)
 		{
 			return $this->addAccountWrapperParams($view, 'liamw_accountdelete_delete_account');
 		});

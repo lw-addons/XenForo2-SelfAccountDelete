@@ -9,6 +9,11 @@
         "version_string": "1.1.0 Beta 5",
         "hash": "fd0c7b76e4acfc25188a46ebb1ce30b0"
     },
+    "admin/liamw_accountdelete_option_template_reason.html": {
+        "version_id": 1020110,
+        "version_string": "1.2.1 Alpha",
+        "hash": "2cfb41f9eb087cfc4da729ddc0e58374"
+    },
     "admin/liamw_accountdelete_option_template_user_criteria.html": {
         "version_id": 1010035,
         "version_string": "1.1.0 Beta 5",
@@ -20,9 +25,9 @@
         "hash": "09f69875cc3d677947971418f971074f"
     },
     "admin/liamw_accountdelete_user_delete_log.html": {
-        "version_id": 1010010,
-        "version_string": "1.1.0 Alpha",
-        "hash": "0d925675ba76094c24998e00f6d45752"
+        "version_id": 1020110,
+        "version_string": "1.2.1 Alpha",
+        "hash": "4ba6ca1d801cbdec080782419efc79d6"
     },
     "email/liamw_accountdelete_delete_cancelled.html": {
         "version_id": 1020031,
@@ -60,8 +65,8 @@
         "hash": "ec9f82b1921aedc651540736440587b2"
     },
     "public/liamw_accountdelete_reason_form.html": {
-        "version_id": 1010010,
-        "version_string": "1.1.0 Alpha",
-        "hash": "f3690495563c36ae7b227f3f43e54d3b"
+        "version_id": 1020110,
+        "version_string": "1.2.1 Alpha",
+        "hash": "3c4e0ce413e770b5d7fb3a4378a4eb84"
     }
 }

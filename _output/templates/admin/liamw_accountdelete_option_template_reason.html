@@ -1,0 +1,14 @@
+<xf:checkboxrow
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<xf:option selected="{$option.option_value.request}" label="{$option.title}" name="{$inputName}[request]">
+		<xf:dependent>
+			<xf:checkbox>
+				<xf:option selected="{$option.option_value.require}" label="~~Require reason to be provided~~" name="{$inputName}[require]" />
+			</xf:checkbox>
+		</xf:dependent>
+	</xf:option>
+
+</xf:checkboxrow>

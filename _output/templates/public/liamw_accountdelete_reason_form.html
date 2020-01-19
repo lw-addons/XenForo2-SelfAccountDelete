@@ -4,7 +4,7 @@
 	<div class="block-container">
 		<div class="block-body">
 
-			<xf:textarearow label="{{ phrase('reason') }}" placeholder="{{ phrase('liamw_accountdelete_why_you_deleting_your_account') }}" rows="5" name="reason" rowtype="fullWidth noLabel" />
+			<xf:textarearow label="{{ phrase('reason') }}" placeholder="{{ phrase('liamw_accountdelete_why_you_deleting_your_account') }}" rows="5" name="reason" rowtype="fullWidth noLabel" required="{$xf.options.liamw_accountdelete_reason.require}" />
 
 		</div>
 
