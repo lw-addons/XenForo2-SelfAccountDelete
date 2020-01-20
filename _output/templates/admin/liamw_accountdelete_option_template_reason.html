@@ -6,7 +6,7 @@
 	<xf:option selected="{$option.option_value.request}" label="{$option.title}" name="{$inputName}[request]">
 		<xf:dependent>
 			<xf:checkbox>
-				<xf:option selected="{$option.option_value.require}" label="~~Require reason to be provided~~" name="{$inputName}[require]" />
+				<xf:option selected="{$option.option_value.require}" label="{{ phrase('liamw_accountdelete_require_reason_to_be_provided') }}" name="{$inputName}[require]" />
 			</xf:checkbox>
 		</xf:dependent>
 	</xf:option>

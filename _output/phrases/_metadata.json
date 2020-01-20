@@ -179,6 +179,12 @@
         "version_string": "1.0.0 Beta 5",
         "hash": "4a90e73ed6dd22e3e893508ef58a5692"
     },
+    "liamw_accountdelete_not_provided.txt": {
+        "global_cache": false,
+        "version_id": 1020171,
+        "version_string": "1.2.1.1",
+        "hash": "34fac42b8df8fffbdf65a132304f46fa"
+    },
     "liamw_accountdelete_please_confirm_deletion_by_checking_the_checkbox.txt": {
         "global_cache": false,
         "version_id": 1000011,
@@ -220,6 +226,12 @@
         "version_id": 1000035,
         "version_string": "1.0.0 Beta 5",
         "hash": "150d4816f993d322e1b070b569cea64a"
+    },
+    "liamw_accountdelete_require_reason_to_be_provided.txt": {
+        "global_cache": false,
+        "version_id": 1020171,
+        "version_string": "1.2.1.1",
+        "hash": "d6e8567d887003118f16b3fd86986d0a"
     },
     "liamw_accountdelete_sending_user_deletion_reminders.txt": {
         "global_cache": false,
@@ -299,6 +311,12 @@
         "version_string": "1.0.0 Beta 3",
         "hash": "28b9368c8be952fd0067b17de52d0d5f"
     },
+    "option.liamw_accountdelete_reason.txt": {
+        "global_cache": false,
+        "version_id": 1020171,
+        "version_string": "1.2.1.1",
+        "hash": "26e95cca8ac943df4dca65cf8c38002b"
+    },
     "option.liamw_accountdelete_reminder_threshold.txt": {
         "global_cache": false,
         "version_id": 1010010,
@@ -334,6 +352,12 @@
         "version_id": 1000033,
         "version_string": "1.0.0 Beta 3",
         "hash": "11976e999907ff10992c4e703562bf72"
+    },
+    "option_explain.liamw_accountdelete_reason.txt": {
+        "global_cache": false,
+        "version_id": 1020171,
+        "version_string": "1.2.1.1",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "option_explain.liamw_accountdelete_reminder_threshold.txt": {
         "global_cache": false,

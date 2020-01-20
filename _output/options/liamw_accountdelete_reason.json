@@ -1,0 +1,15 @@
+{
+    "edit_format": "template",
+    "edit_format_params": "liamw_accountdelete_option_template_reason",
+    "data_type": "array",
+    "sub_options": [
+        "request",
+        "require"
+    ],
+    "validation_class": "",
+    "validation_method": "",
+    "default_value": "{\"request\":true,\"require\":true}",
+    "relations": {
+        "liamw_memberselfdelete": 100
+    }
+}
